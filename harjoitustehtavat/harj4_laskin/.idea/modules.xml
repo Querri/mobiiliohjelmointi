@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\Projects\mobiiliohjelmointi\harjoitustehtavat\harj4_laskin\app\app.iml" filepath="D:\Projects\mobiiliohjelmointi\harjoitustehtavat\harj4_laskin\app\app.iml" />
       <module fileurl="file://D:\Projects\mobiiliohjelmointi\harjoitustehtavat\harj4_laskin\harj2_kayttoliittyma.iml" filepath="D:\Projects\mobiiliohjelmointi\harjoitustehtavat\harj4_laskin\harj2_kayttoliittyma.iml" />
       <module fileurl="file://$PROJECT_DIR$/harj4_laskin.iml" filepath="$PROJECT_DIR$/harj4_laskin.iml" />
     </modules>
