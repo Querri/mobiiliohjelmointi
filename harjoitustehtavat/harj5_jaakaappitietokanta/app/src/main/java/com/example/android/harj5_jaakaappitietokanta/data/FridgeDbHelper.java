@@ -10,7 +10,7 @@ import com.example.android.harj5_jaakaappitietokanta.data.FridgeContract.*;
 public class FridgeDbHelper extends SQLiteOpenHelper {
 
     // database name and version
-    private static final String DATABASE_NAME = "akut.db";
+    private static final String DATABASE_NAME = "fridge.db";
     private static final int DATABASE_VERSION = 1;
 
     // constructor
@@ -23,10 +23,8 @@ public class FridgeDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_AKU_TABLE = "CREATE TABLE " + FridgeEntry.TABLE_NAME + " (" +
                 FridgeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                FridgeEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL," +
-                FridgeEntry.COLUMN_PURCHASE_DATE + " INTEGER NOT NULL," +
                 FridgeEntry.COLUMN_EXPIRATION_DATE + " INTEGER NOT NULL," +
-                FridgeEntry.COLUMN_DESCRIPTION + " TEXT" + ");";
+                FridgeEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL," + ");";
 
     }
 

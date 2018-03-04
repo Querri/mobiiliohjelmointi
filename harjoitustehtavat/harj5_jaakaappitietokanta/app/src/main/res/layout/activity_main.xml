@@ -17,12 +17,12 @@
             android:columnCount="2">
 
             <EditText
-                android:id="@+id/et_product_bought"
+                android:id="@+id/et_product_expiration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:textSize="22sp"
-                android:hint="@string/bought"
+                android:hint="@string/expiration"
                 />
 
             <EditText
@@ -34,37 +34,13 @@
                 android:hint="@string/product_name"
                 />
 
-            <EditText
-                android:id="@+id/et_product_expiration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:textSize="22sp"
-                android:hint="@string/expiration"
-                />
-
-            <EditText
-                android:id="@+id/et_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textSize="22sp"
-                android:hint="@string/description"
-                />
-
             <Button
                 android:id="@+id/bt_add_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:text="@string/add"/>
-
-            <Button
-                android:id="@+id/bt_delete_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:text="@string/delete"/>
+                android:onClick="addToFridge"
+                android:text="@string/add"
+                android:textSize="22sp" />
 
         </GridLayout>
 
