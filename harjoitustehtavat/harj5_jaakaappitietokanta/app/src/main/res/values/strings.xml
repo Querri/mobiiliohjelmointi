@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">harj5_jaakaappitietokanta</string>
+    <string name="product_name">Tuote</string>
+    <string name="bought">Ostopäivä</string>
+    <string name="expiration">Parasta ennen</string>
+    <string name="description">Lisätieto</string>
+
+    <string name="add">Lisää tuote</string>
+    <string name="delete">Poista tuote</string>
+
+    <string name="empty">Vain valoa jääkaapissa</string>
+</resources>
