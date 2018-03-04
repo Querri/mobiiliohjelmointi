@@ -11,7 +11,7 @@ public class FridgeDbHelper extends SQLiteOpenHelper {
 
     // database name and version
     private static final String DATABASE_NAME = "fridge.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // constructor
     public FridgeDbHelper(Context context) {
@@ -21,11 +21,12 @@ public class FridgeDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        final String SQL_CREATE_AKU_TABLE = "CREATE TABLE " + FridgeEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_FRIDGE_TABLE = "CREATE TABLE " + FridgeEntry.TABLE_NAME + " (" +
                 FridgeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 FridgeEntry.COLUMN_EXPIRATION_DATE + " INTEGER NOT NULL," +
                 FridgeEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL," + ");";
 
+        sqLiteDatabase.execSQL(SQL_CREATE_FRIDGE_TABLE);
     }
 
     @Override

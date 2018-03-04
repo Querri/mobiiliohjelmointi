@@ -6,6 +6,8 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.example.android.harj5_jaakaappitietokanta.data.FridgeDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FridgeAdapter mAdapter;
     private SQLiteDatabase mDb;
     private EditText mProductNameEditText;
     private EditText mExpirationDateEditText;
@@ -25,20 +28,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        RecyclerView fridgeRecyclerView;
+
+        fridgeRecyclerView = findViewById(R.id.rv_all_fridge_items);
         mProductNameEditText = findViewById(R.id.et_product_name);
         mExpirationDateEditText = findViewById(R.id.et_product_expiration);
+
+        fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FridgeDbHelper dbHelper = new FridgeDbHelper(this);
 
         mDb = dbHelper.getWritableDatabase();
 
-        //Cursor curosr = getAllItems();
+        Cursor cursor = getAllItems();
+
+        mAdapter = new FridgeAdapter(this, cursor);
+
+        fridgeRecyclerView.setAdapter(mAdapter);
     }
 
 
     public void addToFridge(View view) {
-        if (mProductNameEditText.getText().length() != 0  ||
-                mExpirationDateEditText.getText().length() != 0) {
+        if (mProductNameEditText.getText().length() == 0  ||
+                mExpirationDateEditText.getText().length() == 0) {
             return;
         }
 
@@ -51,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         addNewItem(expiration, mProductNameEditText.getText().toString());
 
-        //TODO swap cursor
+        mAdapter.swapCursor(getAllItems());
 
         mProductNameEditText.clearFocus();
         mProductNameEditText.getText().clear();
@@ -61,14 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
     // query the mDb and get all items from the fridge table
     private Cursor getAllItems() {
-        return mDb.query(FridgeContract.FridgeEntry.TABLE_NAME,
+        return mDb.query(
+                FridgeContract.FridgeEntry.TABLE_NAME,
                 null,
                 null,
                 null,
                 null,
                 null,
                 FridgeContract.FridgeEntry.COLUMN_EXPIRATION_DATE
-                );
+        );
     }
 
 
