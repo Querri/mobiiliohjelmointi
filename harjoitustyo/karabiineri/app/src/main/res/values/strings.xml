@@ -1,19 +1,7 @@
 <resources>
-    <string name="app_name" translatable="false">kARabiineri</string>
+    <string name="app_name">karabiineri</string>
 
-    <string name="settings">Asetukset</string>
-    <string name="map">Kartta</string>
-    <string name="nearest">Lähin</string>
-    <string name="feedback">Anna Palautetta</string>
-
-    <string name="search">Hae</string>
-    <string name="limit_search">Rajaa</string>
-
-    <string name="routes">Reitit</string>
-    <string name="description">Kuvaus</string>
-    <string name="edit">Muokkaa</string>
-    <string name="comments">Kommentit</string>
-    <string name="comment">Kommentoi</string>
-
-    <string name="send">Lähetä</string>
+    <string name="map">Map</string>
+    <string name="settings">Settings</string>
+    <string name="feedback">Feedback</string>
 </resources>
