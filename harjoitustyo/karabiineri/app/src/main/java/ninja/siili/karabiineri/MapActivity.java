@@ -33,6 +33,7 @@ public class MapActivity extends AppCompatActivity implements
     private static final LatLng TEKIILA = new LatLng(61.449969, 23.861945);
     private Marker tekiila;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,7 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -92,6 +94,7 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
+
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
@@ -100,7 +103,6 @@ public class MapActivity extends AppCompatActivity implements
             mPermissionDenied = false;
         }
     }
-
 
 
     @Override
