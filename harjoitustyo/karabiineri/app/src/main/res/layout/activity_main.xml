@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/map_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="to map"/>
+        android:textSize="@dimen/normal_text_size"
+        android:text="@string/map"/>
 
 </android.support.constraint.ConstraintLayout>

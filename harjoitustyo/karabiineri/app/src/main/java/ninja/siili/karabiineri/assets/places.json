@@ -2,14 +2,14 @@
   "place": [
 
     {
-      "id": "0001",
+      "id": "1",
       "marker": "61.449969, 23.861945",
       "title": "TeKiilan kiipeilyseinä",
       "routes_count": "18",
       "routes_diff": "5a 7a",
       "place_type": "sisä",
       "climb_type": "top-rope, lead",
-      "description": "TTY:n kiipeilykerho TeKiilan ylläpitämä sisäseinä.",
+      "desc": "TTY:n kiipeilykerho TeKiilan ylläpitämä sisäseinä.",
       "price": "Unipoli Sportin jäsenyys 70e/v",
       "parking_address": "",
       "parking_price": "ilmainen, 4h kiekko",
@@ -19,14 +19,14 @@
     },
 
     {
-      "id": "0002",
+      "id": "2",
       "marker": "61.503823, 23.806502",
       "title": "TAMKin kiipeilyseinä",
       "routes_count": "",
       "routes_diff": "5a 6a",
       "type": "sisä",
       "climb_type": "top-rope, lead",
-      "description": "TAMKin ylläpitämä kiipeilyseinä.",
+      "desc": "TAMKin ylläpitämä kiipeilyseinä.",
       "price": "Unipoli Sportin jäsenyys 70e/v",
       "parking_address": "",
       "parking_price": "maksullinen",
@@ -36,14 +36,14 @@
     },
 
     {
-      "id": "0003",
+      "id": "3",
       "marker": "61.480649, 23.784284",
       "title": "Tampereen Kiipeilykeskus, Kaleva",
       "routes_count": ">100",
       "routes_diff": "5a 8b",
       "type": "sisä",
       "climb_type": "top-rope, lead, boulder",
-      "description": "Tampereen suurin kiipeilykeskus.",
+      "desc": "Tampereen suurin kiipeilykeskus.",
       "price": "10e, ark 11-14 6e",
       "parking_address": "Mäntyhaantie 2, 33820 Tampere",
       "parking_price": "ilmainen parkkipaikka",
