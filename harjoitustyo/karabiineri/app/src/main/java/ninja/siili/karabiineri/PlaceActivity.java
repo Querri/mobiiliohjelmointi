@@ -3,6 +3,7 @@ package ninja.siili.karabiineri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -18,8 +19,6 @@ public class PlaceActivity extends AppCompatActivity {
     private TextView mParkingPriceTextView;
     private TextView mNotesTextView;
     private TextView mWebTextView;
-
-    private String ID = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +38,26 @@ public class PlaceActivity extends AppCompatActivity {
         mNotesTextView = findViewById(R.id.tv_notes);
         mWebTextView = findViewById(R.id.tv_web);
 
-        mTitleTextView.setText(ParserUtils.getPlaceFieldText(this, ID, "title"));
-        mRoutesCountTextView.setText(ParserUtils.getPlaceFieldText(this, ID, "routes_count"));
-        mRoutesDiffTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "routes_diff")));
-        mPlaceTypeTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "place_type")));
-        mClimbTypeTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "climb_type")));
-        mPriceTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "price")));
-        mOpenTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "open")));
-        mDescTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "desc")));
-        mParkingAddrTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "parking_address")));
-        mParkingPriceTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "parking_price")));
-        mNotesTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "notes")));
-        mWebTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "web")));
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            String id = b.getString("id");
+
+            mTitleTextView.setText(ParserUtils.getPlaceFieldText(this, id, "title"));
+            mRoutesCountTextView.setText(ParserUtils.getPlaceFieldText(this, id, "routes_count"));
+            mRoutesDiffTextView.setText((ParserUtils.getPlaceFieldText(this, id, "routes_diff")));
+            mPlaceTypeTextView.setText((ParserUtils.getPlaceFieldText(this, id, "place_type")));
+            mClimbTypeTextView.setText((ParserUtils.getPlaceFieldText(this, id, "climb_type")));
+            mPriceTextView.setText((ParserUtils.getPlaceFieldText(this, id, "price")));
+            mOpenTextView.setText((ParserUtils.getPlaceFieldText(this, id, "open")));
+            mDescTextView.setText((ParserUtils.getPlaceFieldText(this, id, "desc")));
+            mParkingAddrTextView.setText((ParserUtils.getPlaceFieldText(this, id, "parking_address")));
+            mParkingPriceTextView.setText((ParserUtils.getPlaceFieldText(this, id, "parking_price")));
+            mNotesTextView.setText((ParserUtils.getPlaceFieldText(this, id, "notes")));
+            mWebTextView.setText((ParserUtils.getPlaceFieldText(this, id, "web")));
+        } else {
+            Toast.makeText(this, "no id in tag", Toast.LENGTH_SHORT).show();
+            // TODO make actual exception, tea biscuits
+        }
     }
 
 

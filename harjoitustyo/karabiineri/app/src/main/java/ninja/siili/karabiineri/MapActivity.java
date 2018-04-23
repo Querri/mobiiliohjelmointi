@@ -116,8 +116,8 @@ public class MapActivity extends AppCompatActivity implements
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-        String placeID = (String) marker.getTag();
-        // TODO pass ID to PlaceActivity
-        startActivity(new Intent(MapActivity.this, PlaceActivity.class));
+        Intent intent = new Intent(MapActivity.this, PlaceActivity.class);
+        intent.putExtra("id", (String) marker.getTag());
+        startActivity(intent);
     }
 }
