@@ -1,6 +1,6 @@
-{ "place": [
-
-    {
+[
+  {
+    "place": {
       "id": "1",
       "marker": "61.449969, 23.861945",
       "title": "TeKiilan kiipeilyseinä",
@@ -15,9 +15,11 @@
       "open": "ark 06-22:30, vklp 10-21",
       "notes": "Parkkipaikalle ajo TTY:n takaa Korkeakoulunkadulta.",
       "web": "http://www.tekiila.fi/"
-    },
+    }
+  },
 
-    {
+  {
+    "place": {
       "id": "2",
       "marker": "61.503823, 23.806502",
       "title": "TAMKin kiipeilyseinä",
@@ -32,9 +34,10 @@
       "open": "ark 11-21, vkpl 12-18",
       "notes": "omat kengät, mankka ja liidiköysi mukaan",
       "web": "http://sport.unipolitampere.fi/tarjonta/muutlajit.html"
-    },
-
-    {
+    }
+  },
+  {
+    "place": {
       "id": "3",
       "marker": "61.480649, 23.784284",
       "title": "Tampereen Kiipeilykeskus, Kaleva",
@@ -50,5 +53,5 @@
       "notes": "",
       "web": "http://tampereenkiipeilykeskus.fi/"
     }
-  ]
-}
+  }
+]

@@ -31,7 +31,7 @@ public class PlaceActivity extends AppCompatActivity {
     private TextView mNotesTextView;
     private TextView mWebTextView;
 
-    private int ID = 1;
+    private String ID = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +68,16 @@ public class PlaceActivity extends AppCompatActivity {
 
 
 
-    private String getFieldText(int id, String fieldName) {
+    private String getFieldText(String id, String fieldName) {
         JSONParser parser = new JSONParser();
 
         try {
-            InputStream stream = getAssets().open("test.json");
+            InputStream stream = getAssets().open("places.json");
             InputStreamReader streamReader = new InputStreamReader((stream));
 
-            JSONObject jsonObject = (JSONObject) parser.parse(streamReader);
-            return (String) jsonObject.get(fieldName);
+            JSONArray placesArray = (JSONArray) parser.parse(streamReader);
+
+            return parsePlaceObject(placesArray, id, fieldName);
 
 
         } catch (FileNotFoundException e) {
@@ -89,6 +90,22 @@ public class PlaceActivity extends AppCompatActivity {
             Toast.makeText(this, "parse exeption", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-        return ""; // TODO don't leave it like this
+        return "no"; // TODO don't leave it like this
+    }
+
+
+    // returns field data
+    private String parsePlaceObject(JSONArray places, String id, String fieldName) {
+
+        for (Object place : places) {
+            if (place instanceof JSONObject) {
+                JSONObject placeObject = (JSONObject) ((JSONObject) place).get("place");
+
+                if (placeObject.get("id").equals(id)) {
+                    return (String) placeObject.get(fieldName);
+                }
+            }
+        }
+        return "place not found";
     }
 }
