@@ -30,9 +30,6 @@ public class MapActivity extends AppCompatActivity implements
 
     private GoogleMap mMap;
 
-    private static final LatLng TEKIILA = new LatLng(61.449969, 23.861945);
-    private Marker tekiila;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +47,24 @@ public class MapActivity extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker and move the camera
-        tekiila = mMap.addMarker(new MarkerOptions()
-                .position(TEKIILA)
-                .title("title")
-                .snippet("routes_diff"));
-        tekiila.setTag("id");
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(TEKIILA));
+        // loop through all place IDs and place markers
+        for (int i = 0; i < ParserUtils.getPlacesCount(this); i++) {
+
+            LatLng location = ParserUtils.getPlaceFieldLatLng(this, Integer.toString(i));
+            if (location != null) {
+
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .title(ParserUtils.getPlaceFieldText(this, Integer.toString(i), "title"))
+                        .snippet(ParserUtils.getPlaceFieldText(this, Integer.toString(i), "desc")));
+                marker.setTag(ParserUtils.getPlaceFieldText(this, Integer.toString(i), "id"));
+            } else {
+                Toast.makeText(this, "null location", Toast.LENGTH_SHORT).show();
+                // TODO actual exception
+            }
+        }
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(TEKIILA));
 
         // Set infowindowclicklistener and enable location
         mMap.setOnInfoWindowClickListener(this);

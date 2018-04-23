@@ -1,8 +1,9 @@
 [
   {
     "place": {
-      "id": "1",
-      "marker": "61.449969, 23.861945",
+      "id": "0",
+      "lat": "61.449969",
+      "lng": "23.861945",
       "title": "TeKiilan kiipeilyseinä",
       "routes_count": "18",
       "routes_diff": "5a 7a",
@@ -20,8 +21,9 @@
 
   {
     "place": {
-      "id": "2",
-      "marker": "61.503823, 23.806502",
+      "id": "1",
+      "lat": "61.503823",
+      "lng": "23.806502",
       "title": "TAMKin kiipeilyseinä",
       "routes_count": "",
       "routes_diff": "5a 6a",
@@ -38,8 +40,9 @@
   },
   {
     "place": {
-      "id": "3",
-      "marker": "61.480649, 23.784284",
+      "id": "2",
+      "lat": "61.480649",
+      "lng": "23.784284",
       "title": "Tampereen Kiipeilykeskus, Kaleva",
       "routes_count": ">100",
       "routes_diff": "5a 8b",

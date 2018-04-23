@@ -3,18 +3,6 @@ package ninja.siili.karabiineri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -51,61 +39,19 @@ public class PlaceActivity extends AppCompatActivity {
         mNotesTextView = findViewById(R.id.tv_notes);
         mWebTextView = findViewById(R.id.tv_web);
 
-        mTitleTextView.setText(getFieldText(ID, "title"));
-        mRoutesCountTextView.setText(getFieldText(ID, "routes_count"));
-        mRoutesDiffTextView.setText((getFieldText(ID, "routes_diff")));
-        mPlaceTypeTextView.setText((getFieldText(ID, "place_type")));
-        mClimbTypeTextView.setText((getFieldText(ID, "climb_type")));
-        mPriceTextView.setText((getFieldText(ID, "price")));
-        mOpenTextView.setText((getFieldText(ID, "open")));
-        mDescTextView.setText((getFieldText(ID, "desc")));
-        mParkingAddrTextView.setText((getFieldText(ID, "parking_address")));
-        mParkingPriceTextView.setText((getFieldText(ID, "parking_price")));
-        mNotesTextView.setText((getFieldText(ID, "notes")));
-        mWebTextView.setText((getFieldText(ID, "web")));
+        mTitleTextView.setText(ParserUtils.getPlaceFieldText(this, ID, "title"));
+        mRoutesCountTextView.setText(ParserUtils.getPlaceFieldText(this, ID, "routes_count"));
+        mRoutesDiffTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "routes_diff")));
+        mPlaceTypeTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "place_type")));
+        mClimbTypeTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "climb_type")));
+        mPriceTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "price")));
+        mOpenTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "open")));
+        mDescTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "desc")));
+        mParkingAddrTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "parking_address")));
+        mParkingPriceTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "parking_price")));
+        mNotesTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "notes")));
+        mWebTextView.setText((ParserUtils.getPlaceFieldText(this, ID, "web")));
     }
 
 
-
-
-    private String getFieldText(String id, String fieldName) {
-        JSONParser parser = new JSONParser();
-
-        try {
-            InputStream stream = getAssets().open("places.json");
-            InputStreamReader streamReader = new InputStreamReader((stream));
-
-            JSONArray placesArray = (JSONArray) parser.parse(streamReader);
-
-            return parsePlaceObject(placesArray, id, fieldName);
-
-
-        } catch (FileNotFoundException e) {
-            Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (IOException e) {
-            Toast.makeText(this, "IO exeption", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (ParseException e) {
-            Toast.makeText(this, "parse exeption", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-        return "no"; // TODO don't leave it like this
-    }
-
-
-    // returns field data
-    private String parsePlaceObject(JSONArray places, String id, String fieldName) {
-
-        for (Object place : places) {
-            if (place instanceof JSONObject) {
-                JSONObject placeObject = (JSONObject) ((JSONObject) place).get("place");
-
-                if (placeObject.get("id").equals(id)) {
-                    return (String) placeObject.get(fieldName);
-                }
-            }
-        }
-        return "place not found";
-    }
 }
