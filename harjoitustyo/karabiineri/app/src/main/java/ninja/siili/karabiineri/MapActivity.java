@@ -53,9 +53,9 @@ public class MapActivity extends AppCompatActivity implements
         // Add a marker and move the camera
         tekiila = mMap.addMarker(new MarkerOptions()
                 .position(TEKIILA)
-                .title("TeKiilan kiipeilyseinä")
-                .snippet("Routes: 5a - 7a"));
-        tekiila.setTag("tekiila_01");
+                .title("title")
+                .snippet("routes_diff"));
+        tekiila.setTag("id");
         mMap.moveCamera(CameraUpdateFactory.newLatLng(TEKIILA));
 
         // Set infowindowclicklistener and enable location
