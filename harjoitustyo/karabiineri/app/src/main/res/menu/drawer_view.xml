@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="111111" />
+            android:id="@+id/nav_nearest"
+            android:title="@string/nearest" />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="222222" />
+            android:id="@+id/nav_settings"
+            android:title="@string/settings" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:title="333333" />
+            android:id="@+id/nav_help"
+            android:title="@string/help" />
         <item
-            android:id="@+id/nav_manage"
-            android:title="444444" />
+            android:id="@+id/nav_feedback"
+            android:title="@string/feedback" />
     </group>
 </menu>

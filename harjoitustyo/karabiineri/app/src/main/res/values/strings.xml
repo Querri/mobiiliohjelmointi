@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">karabiineri</string>
 
-    <string name="map">Kartta</string>
     <string name="nearest">Lähin</string>
     <string name="settings">Asetukset</string>
-    <string name="feedback">Palaute</string>
+    <string name="help">Apua</string>
+    <string name="feedback">Anna Palautetta</string>
 
     <!--    Places         -->
     <string name="title">NIMI</string>
