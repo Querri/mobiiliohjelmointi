@@ -1,10 +1,38 @@
 <resources>
-    <string name="app_name">karabiineri</string>
+    <string name="app_name" translatable="false">karabiineri</string>
 
-    <string name="map">Map</string>
-    <string name="settings">Settings</string>
-    <string name="feedback">Feedback</string>
+    <string name="map">Kartta</string>
+    <string name="nearest">Lähin</string>
+    <string name="settings">Asetukset</string>
+    <string name="feedback">Palaute</string>
 
+    <!--    Places         -->
+    <string name="title">NIMI</string>
+    <string name="routes_diff">REITTIEN TASO</string>
+    <string name="routes_count">REITTIEN MÄÄRÄ</string>
+    <string name="route_types">REITTITYYPIT</string>
+    <string name="place_type">PAIKAN TYYPPI</string>
+    <string name="price">HINTA</string>
+    <string name="open">AVOINNA</string>
+    <string name="parking">PARKKEERAUS</string>
+    <string name="addr">OSOITE</string>
+    <string name="notes">LISÄTIETOJA</string>
+    <string name="desc">KUVAUS</string>
+    <string name="web">HTTP</string>
+
+    <!--    Edit place      -->
+    <string name="indoors">sisäseinä</string>
+    <string name="outdoors">ulkoseinä</string>
+    <string name="boulder">boulder</string>
+    <string name="toprope">yläköysi</string>
+    <string name="lead">alaköysi</string>
+    <string name="route_diff_start">helpoin</string>
+    <string name="route_diff_end">vaikein</string>
+    <string name="free_parking">ilmainen pysäköinti</string>
+
+    <!--    ??      -->
+    <string name="save">TALLENNA</string>
+    <string name="back">TAKAISIN</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location">Access to the location service is required to use the map feature, which shows your current location on the map.</string>

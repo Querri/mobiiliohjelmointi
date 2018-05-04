@@ -19,12 +19,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MapActivity" />
-        <activity android:name=".PlaceActivity"/>
+        <activity android:name=".PlaceActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCbyTVVSbVFnkD4LOgoiDZhiXsfoF7QwAI" />
 
+        <activity android:name=".PlaceEditActivity"></activity>
     </application>
 
 </manifest>

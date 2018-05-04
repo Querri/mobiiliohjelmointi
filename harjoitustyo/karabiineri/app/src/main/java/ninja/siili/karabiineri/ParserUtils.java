@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -13,13 +14,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 public abstract class ParserUtils {
 
     public static int getPlacesCount(Context context) {
-        JSONArray places = getArray(context);
+        JSONArray places = getJSONArray(context);
         int count = 0;
 
         if (places != null) {
@@ -35,7 +37,7 @@ public abstract class ParserUtils {
 
     public static String getPlaceFieldText(Context context, String id, String fieldName) {
 
-        JSONArray places = getArray(context);
+        JSONArray places = getJSONArray(context);
 
         if (places != null) {
             for (Object place : places) {
@@ -52,7 +54,7 @@ public abstract class ParserUtils {
     }
 
     public static LatLng getPlaceFieldLatLng(Context context, String id) {
-        JSONArray places = getArray(context);
+        JSONArray places = getJSONArray(context);
 
         if (places != null) {
             for (Object place : places) {
@@ -76,7 +78,7 @@ public abstract class ParserUtils {
     }
 
 
-    private static JSONArray getArray(Context context) {
+    private static JSONArray getJSONArray(Context context) {
         org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
 
         try {
@@ -96,5 +98,20 @@ public abstract class ParserUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+
+    public static void writePlace(Context context, Map<String, String> entries) {
+
+        //JSONObject obj = new JSONObject();
+
+        /*for (Map.Entry<String, String> entry : entries.entrySet()) {
+            obj.put(entry.getKey(), entry.getValue());
+        }*/
+
+        //Toast.makeText(context, obj.get("id").toString(), Toast.LENGTH_SHORT).show();
+    Toast.makeText(context, entries.get("id") + " lisätty", Toast.LENGTH_SHORT).show();
+
     }
 }
