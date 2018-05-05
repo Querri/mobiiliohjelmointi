@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class PlaceActivity extends AppCompatActivity {
 
-    private RecyclerView mValuesList;
+    //private RecyclerView mValuesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,19 @@ public class PlaceActivity extends AppCompatActivity {
             TextView webTextView = findViewById(R.id.tv_web);
             TextView notesTextView = findViewById(R.id.tv_notes);
 
-            titleTextView.setText(ParserUtils.getPlaceFieldText(this, id, "title"));
-            placeTypTextView.setText(ParserUtils.getPlaceFieldText(this, id, "place_type"));
-            routeTypeTextView.setText(ParserUtils.getPlaceFieldText(this, id, "routes_type"));
-            routeDiffStartTextView.setText(ParserUtils.getPlaceFieldText(this, id, "routes_diff_start"));
-            routeDiffEndTextView.setText(ParserUtils.getPlaceFieldText(this, id, "routes_diff_end"));
-            descTextView.setText(ParserUtils.getPlaceFieldText(this, id, "desc"));
-            webTextView.setText(ParserUtils.getPlaceFieldText(this, id, "web"));
-            notesTextView.setText(ParserUtils.getPlaceFieldText(this, id, "notes"));
+            TextView[] textViews = {titleTextView, placeTypTextView, routeTypeTextView,
+                    routeDiffStartTextView, routeDiffEndTextView, descTextView, webTextView, notesTextView};
+            String[] keys = {"title", "place_type", "routes_type", "routes_diff_start",
+                    "routes_diff_end", "desc", "web", "notes"};
 
-            /*String[] keys = {"id", "lat", "lng", "title", "place_type", "routes_diff",
-                            "routes_type", "desc", "parking_price", "notes", "web"};
+            // set texts for all tTextViews
+            int i = 0;
+            for (TextView textView : textViews) {
+                textView.setText(ParserUtils.getPlaceFieldText(this, id, keys[i]));
+                i++;
+            }
 
-            mValuesList = findViewById(R.id.rv_values);
+            /*mValuesList = findViewById(R.id.rv_values);
             mValuesList.setLayoutManager(new LinearLayoutManager(this));
             mValuesList.setHasFixedSize(true);
             mValuesList.setAdapter(new PlaceAdapter(ParserUtils.getMap(this, id), keys));*/

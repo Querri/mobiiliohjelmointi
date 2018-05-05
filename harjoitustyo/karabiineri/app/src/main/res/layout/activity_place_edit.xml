@@ -1,181 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".PlaceEditActivity"
+    android:id="@+id/gridLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="3">
+    android:columnCount="3"
+    tools:context=".PlaceEditActivity">
 
     <!-- title -->
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginEnd="100dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/title"
         android:textColor="@color/colorAccent"
-        android:text="@string/title"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/et_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnSpan="2"
-        android:textSize="@dimen/normal_text_size"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!-- place type -->
     <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/place_type"
         android:textColor="@color/colorAccent"
-        android:text="@string/place_type"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/et_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
-    <RadioGroup
-        android:layout_columnSpan="2">
 
-        <RadioButton
-            android:id="@+id/rb_indoors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/normal_text_size"
-            android:text="@string/indoors"/>
+    <RadioButton
+        android:id="@+id/rb_indoors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/indoors"
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintStart_toStartOf="@+id/et_title"
+        app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
-        <RadioButton
-            android:id="@+id/rb_outdoors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/normal_text_size"
-            android:text="@string/outdoors"/>
-    </RadioGroup>
+    <RadioButton
+        android:id="@+id/rb_outdoors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/outdoors"
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintStart_toStartOf="@+id/rb_indoors"
+        app:layout_constraintTop_toBottomOf="@+id/rb_indoors" />
 
 
     <!-- route type -->
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_rowSpan="3"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/route_types"
         android:textColor="@color/colorAccent"
-        android:text="@string/route_types"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cb_boulder"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/cb_boulder"
-        android:layout_columnSpan="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/boulder"
         android:textSize="@dimen/normal_text_size"
-        android:text="@string/boulder"/>
-
-    <CheckBox
-        android:id="@+id/cb_toprope"
-        android:layout_columnSpan="2"
-        android:textSize="@dimen/normal_text_size"
-        android:text="@string/toprope"/>
+        app:layout_constraintStart_toStartOf="@+id/rb_outdoors"
+        app:layout_constraintTop_toBottomOf="@+id/rb_outdoors" />
 
     <CheckBox
         android:id="@+id/cb_lead"
-        android:layout_columnSpan="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lead"
         android:textSize="@dimen/normal_text_size"
-        android:text="@string/lead"/>
+        app:layout_constraintStart_toStartOf="@+id/cb_toprope"
+        app:layout_constraintTop_toBottomOf="@+id/cb_toprope" />
 
 
     <!-- route diffs -->
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/routes_diff"
         android:textColor="@color/colorAccent"
-        android:text="@string/routes_diff"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/et_route_diff_start"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_route_diff_start"
-        android:layout_width="0dp"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnSpan="1"
+        android:hint="@string/route_diff_start"
         android:textSize="@dimen/normal_text_size"
-        android:hint="@string/route_diff_start"/>
+        app:layout_constraintEnd_toStartOf="@+id/et_route_diff_end"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        tools:layout_editor_absoluteY="208dp" />
+
+    <CheckBox
+        android:id="@+id/cb_toprope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/toprope"
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintStart_toStartOf="@+id/cb_boulder"
+        app:layout_constraintTop_toBottomOf="@+id/cb_boulder" />
 
     <EditText
         android:id="@+id/et_route_diff_end"
-        android:layout_width="0dp"
+        android:layout_width="82dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnSpan="1"
+        android:hint="@string/route_diff_end"
         android:textSize="@dimen/normal_text_size"
-        android:hint="@string/route_diff_end"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/et_route_diff_start"
+        tools:layout_editor_absoluteY="208dp" />
 
     <!-- desc -->
     <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="21dp"
+        android:text="@string/desc"
         android:textColor="@color/colorAccent"
-        android:text="@string/desc"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
         android:id="@+id/et_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnSpan="2"
-        android:textSize="@dimen/normal_text_size"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintEnd_toEndOf="@+id/et_web"
+        app:layout_constraintStart_toStartOf="@+id/et_route_diff_start"
+        app:layout_constraintTop_toBottomOf="@+id/et_route_diff_end" />
 
     <!-- web -->
     <TextView
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="21dp"
+        android:text="@string/web"
         android:textColor="@color/colorAccent"
-        android:text="@string/web"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
         android:id="@+id/et_web"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnSpan="2"
-        android:textSize="@dimen/normal_text_size"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/et_desc" />
 
     <!-- notes -->
     <TextView
+        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_rowSpan="2"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/notes"
         android:textColor="@color/colorAccent"
-        android:text="@string/notes"/>
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <EditText
         android:id="@+id/et_notes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnSpan="2"
-        android:textSize="@dimen/normal_text_size"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="@dimen/normal_text_size"
+        app:layout_constraintEnd_toEndOf="@+id/et_web"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/et_web" />
 
     <CheckBox
         android:id="@+id/cb_parking_free"
-        android:layout_columnSpan="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/free_parking"
         android:textSize="@dimen/normal_text_size"
-        android:text="@string/free_parking"/>
+        app:layout_constraintTop_toBottomOf="@+id/et_notes"
+        tools:layout_editor_absoluteX="221dp" />
 
 
     <!-- buttons -->
-    <Button
-        android:id="@+id/bt_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/normal_text_size"
-        android:text="@string/back"/>
 
     <Button
         android:id="@+id/bt_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/save"
         android:textSize="@dimen/normal_text_size"
-        android:text="@string/save"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cb_parking_free" />
 
 
-</GridLayout>
+</android.support.constraint.ConstraintLayout>
