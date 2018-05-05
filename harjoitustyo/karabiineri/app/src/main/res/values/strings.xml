@@ -19,6 +19,7 @@
     <string name="notes">LISÄTIETOJA</string>
     <string name="desc">KUVAUS</string>
     <string name="web">HTTP</string>
+    <string name="ar">AR</string>
 
     <!--    Edit place      -->
     <string name="indoors">sisäseinä</string>

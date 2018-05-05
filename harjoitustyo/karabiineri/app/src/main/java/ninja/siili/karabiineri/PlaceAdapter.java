@@ -77,7 +77,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         String keyInPosition = mKeys[position];
         String valueInPosition = mMap.get(keyInPosition);
 
-        holder.listItemKeyView.setText(keyInPosition);
+        holder.listItemKeyView.setText("@string/");
         holder.listItemValueView.setText(valueInPosition);
     }
 
