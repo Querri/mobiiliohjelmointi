@@ -51,7 +51,7 @@ public abstract class ParserUtils {
      * @return  An array containing keys.
      */
     public static String[] getKeys() {
-        String[] keys = {"title", "web", "place_type", "routes_type", "routes_diff_start",
+        String[] keys = {"title", "place_type", "routes_type", "routes_diff_start",
                 "routes_diff_end", "desc", "notes", "parking_paid"};
         return keys;
     }
