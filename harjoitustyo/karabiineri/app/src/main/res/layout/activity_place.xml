@@ -190,7 +190,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
         <TextView
-            android:id="@+id/tv_parking_free"
+            android:id="@+id/tv_parking_paid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -216,8 +216,9 @@
             android:text="@string/ar"
             android:textSize="@dimen/normal_text_size"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_parking_free" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_parking_paid" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"

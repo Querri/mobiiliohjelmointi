@@ -5,12 +5,11 @@
       "lat": "61.449969",
       "lng": "23.861945",
       "title": "TeKiilan kiipeilyseinä",
-      "place_type": "sisä",
+      "place_type": "sisätila",
       "routes_diff_start": "5a",
       "routes_diff_end": "7a",
       "routes_type": "top-rope, lead",
       "desc": "TTY:n kiipeilykerho TeKiilan ylläpitämä sisäseinä.",
-      "parking_paid": "False",
       "notes": "Parkkipaikalle ajo TTY:n takaa Korkeakoulunkadulta, 4h parkkiaika.",
       "web": "http://www.tekiila.fi/"
     }
@@ -22,14 +21,14 @@
       "lat": "61.503823",
       "lng": "23.806502",
       "title": "TAMKin kiipeilyseinä",
-      "place_type": "sisä",
+      "place_type": "sisätila",
       "routes_diff_start": "5a",
       "routes_diff_end": "6a",
       "routes_type": "top-rope, lead",
       "desc": "TAMKin ylläpitämä kiipeilyseinä.",
-      "parking_paid": "True",
       "notes": "omat kengät, mankka ja liidiköysi mukaan",
       "web": "http://sport.unipolitampere.fi/tarjonta/muutlajit.html"
+      "parking_paid": "Maksullinen pysäköinti",
     }
   },
   {
@@ -38,13 +37,11 @@
       "lat": "61.480649",
       "lng": "23.784284",
       "title": "Tampereen Kiipeilykeskus, Kaleva",
-      "place_type": "sisä",
+      "place_type": "sisätila",
       "routes_diff_start": "5a",
       "routes_diff_end": "8a",
       "routes_type": "top-rope, lead, boulder",
       "desc": "Tampereen suurin kiipeilykeskus.",
-      "parking_paid": "True",
-      "notes": "-",
       "web": "http://tampereenkiipeilykeskus.fi/"
     }
   }

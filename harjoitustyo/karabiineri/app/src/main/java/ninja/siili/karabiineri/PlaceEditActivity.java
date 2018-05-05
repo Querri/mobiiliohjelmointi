@@ -51,13 +51,7 @@ public class PlaceEditActivity extends AppCompatActivity {
         mCheckboxFreeParking = findViewById(R.id.cb_parking_free);
         mEdittextNotes = findViewById(R.id.et_notes);
         mButtonSave = findViewById(R.id.bt_save);
-        mButtonBack = findViewById(R.id.bt_back);
 
-        mButtonBack.setOnClickListener( new View.OnClickListener() {
-            public void onClick(View v) {
-                // TODO go back
-            }
-        });
 
         mButtonSave.setOnClickListener( new View.OnClickListener() {
             public void onClick(View v) {
