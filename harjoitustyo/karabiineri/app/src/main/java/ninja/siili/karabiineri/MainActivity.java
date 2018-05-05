@@ -108,19 +108,18 @@ public class MainActivity extends AppCompatActivity implements
 
 
         // Get last known location and focus the camera
+        // TODO check permission or redo with LocationListener
         Location location = locationManager.getLastKnownLocation(locationManager
                 .getBestProvider(criteria, false));
-        // TODO check permission or redo with LocationListener
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to Mountain View
-                .zoom(11)                   // Sets the zoom
-                .build();                   // Creates a CameraPosition from the builder
+                .target(latLng)
+                .zoom(11)
+                .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
 
 
     private void enableMyLocation() {
@@ -148,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
         Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
         intent.putExtra("id", (String) marker.getTag());
         startActivity(intent);

@@ -3,6 +3,7 @@ package ninja.siili.karabiineri;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -32,6 +34,58 @@ public abstract class ParserUtils {
             }
         }
         return count;
+    }
+
+
+    public static int getValuesCount(Context context, String id) {
+        JSONArray places = getJSONArray(context);
+
+        HashMap<String, String> map = new HashMap<>();
+
+        if (places != null) {
+            for (Object place : places) {
+
+                if (place instanceof JSONObject) {
+                    JSONObject placeObject = (JSONObject) ((JSONObject) place).get("place");
+
+                    if (placeObject.get("id").equals(id)) {
+                        for (Iterator iterator = placeObject.keySet().iterator(); iterator.hasNext();) {
+                            String key = (String) iterator.next();
+                            String value = (String) placeObject.get(key);
+                            map.put(key, value);
+                        }
+
+                    }
+                }
+            }
+        }
+        return map.size();
+    }
+
+
+    public static HashMap<String, String> getMap(Context context, String id) {
+        JSONArray places = getJSONArray(context);
+
+        HashMap<String, String> map = new HashMap<>();
+
+        if (places != null) {
+            for (Object place : places) {
+
+                if (place instanceof JSONObject) {
+                    JSONObject placeObject = (JSONObject) ((JSONObject) place).get("place");
+
+                    if (placeObject.get("id").equals(id)) {
+                        for (Iterator iterator = placeObject.keySet().iterator(); iterator.hasNext();) {
+                            String key = (String) iterator.next();
+                            String value = (String) placeObject.get(key);
+                            map.put(key, value);
+                        }
+
+                    }
+                }
+            }
+        }
+        return map;
     }
 
 
