@@ -3,15 +3,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_nearest"
-            android:title="@string/nearest" />
+            android:title="@string/nearest"
+            android:icon="@drawable/ic_location"/>
         <item
             android:id="@+id/nav_settings"
-            android:title="@string/settings" />
+            android:title="@string/settings"
+            android:icon="@drawable/ic_settings"/>
         <item
             android:id="@+id/nav_help"
-            android:title="@string/help" />
+            android:title="@string/help"
+            android:icon="@drawable/ic_help"/>
         <item
             android:id="@+id/nav_feedback"
-            android:title="@string/feedback" />
+            android:title="@string/feedback"
+            android:icon="@drawable/ic_announcement"/>
     </group>
 </menu>

@@ -12,25 +12,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        row
-
         <!-- title -->
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/title"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/normal_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/bt_web"
+            app:layout_constraintEnd_toStartOf="@+id/bt_web"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <!-- place type -->
@@ -166,8 +163,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:text="w"
-            android:textSize="@dimen/small_text_size"
+            android:background="@drawable/ic_open_in_browser"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -201,7 +197,7 @@
         <!-- AR button -->
         <Button
             android:id="@+id/bt_routes"
-            android:layout_width="143dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
