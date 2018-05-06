@@ -11,11 +11,14 @@ import android.location.LocationManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -42,11 +45,22 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout mDrawerLayout;
 
 
+    /**
+     * Creates the action and sets thing up.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        // Set menu button in action bar
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_drawer_menu);
+
+
+        // Find drawer and set it's items clickable
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -55,25 +69,45 @@ public class MainActivity extends AppCompatActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        // Detect clicks on navigation drawer
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-
-                        return true;
-                    }
-                });
-
     }
 
 
+    /**
+     * Creates the menu button in action bar.
+     * @param menu  The action bar? I must admid that i'm not sure.
+     * @return      True to signal completion.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+    /**
+     * Open and close drawer menu with the menu button in action bar.
+     * @param item  The selected item, which is the menu button.
+     * @return      Boolean, probably signals success.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Called when the map is ready to set up everything in it.
+     * @param googleMap The map in question.
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -106,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements
         // Enable location and move/zoom camera
         enableMyLocation();
 
-
         // Get last known location and focus the camera
+        // FIXME
         // TODO check permission or redo with LocationListener
         Location location = locationManager.getLastKnownLocation(locationManager
                 .getBestProvider(criteria, false));
@@ -122,6 +156,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    /**
+     * Checks permissions and enables user's location.
+     */
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -135,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    /**
+     * Locationpermission was denied and something happens here. Must investigate further.
+     */
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
@@ -145,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    /**
+     * Mapmarker's infowindow was clicked and the correct placeActivity must be started.
+     * @param marker
+     */
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(MainActivity.this, PlaceActivity.class);

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">karabiineri</string>
 
-    <string name="nearest">Lähin</string>
+    <string name="nearest_place">Lähin kiipeilypaikka</string>
+    <string name="add_place">Lisää kiipeilypaikka</string>
     <string name="settings">Asetukset</string>
     <string name="help">Apua</string>
     <string name="feedback">Anna Palautetta</string>

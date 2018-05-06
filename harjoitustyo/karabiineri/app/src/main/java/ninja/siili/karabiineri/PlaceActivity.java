@@ -1,11 +1,18 @@
 package ninja.siili.karabiineri;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,12 +26,21 @@ import java.util.Vector;
 
 public class PlaceActivity extends AppCompatActivity {
 
-    //private RecyclerView mValuesList;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
+
+        // Set menu button in action bar
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_drawer_menu);
+
+        // Find drawer and set it's items clickable
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
 
         Bundle b = getIntent().getExtras();
@@ -59,18 +75,30 @@ public class PlaceActivity extends AppCompatActivity {
                 }
             });
 
-
-
-
-            /*mValuesList = findViewById(R.id.rv_values);
-            mValuesList.setLayoutManager(new LinearLayoutManager(this));
-            mValuesList.setHasFixedSize(true);
-            mValuesList.setAdapter(new PlaceAdapter(ParserUtils.getMap(this, id), keys));*/
-
         } else {
             Toast.makeText(this, "no id in tag", Toast.LENGTH_SHORT).show();
             // TODO make actual exception, tea biscuits
         }
+    }
+
+
+    /**
+     * Open and close drawer menu with the menu button in action bar.
+     * @param item  The selected item, which is the menu button.
+     * @return      Boolean, probably signals success.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -85,6 +113,4 @@ public class PlaceActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
-
 }
