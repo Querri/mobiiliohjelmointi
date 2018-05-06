@@ -41,6 +41,36 @@ public class PlaceActivity extends AppCompatActivity {
         // Find drawer and set it's items clickable
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+
+                        int itemId = menuItem.getItemId();
+
+                        // TODO actual navigation
+                        switch (itemId) {
+                            case R.id.nav_nearest_place:
+                                Toast.makeText(PlaceActivity.this, "nearest", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_add_place:
+                                Toast.makeText(PlaceActivity.this, "add", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_settings:
+                                Toast.makeText(PlaceActivity.this, "settings", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_help:
+                                Toast.makeText(PlaceActivity.this, "help", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_feedback:
+                                Toast.makeText(PlaceActivity.this, "feedback", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
 
 
         Bundle b = getIntent().getExtras();

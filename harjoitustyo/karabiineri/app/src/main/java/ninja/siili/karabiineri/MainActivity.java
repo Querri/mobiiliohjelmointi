@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     /**
-     * Creates the action and sets thing up.
+     * Creates the action and sets things up.
      * @param savedInstanceState
      */
     @Override
@@ -63,24 +63,42 @@ public class MainActivity extends AppCompatActivity implements
         // Find drawer and set it's items clickable
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+
+                        int itemId = menuItem.getItemId();
+
+                        // TODO actual navigation
+                        switch (itemId) {
+                            case R.id.nav_nearest_place:
+                                Toast.makeText(MainActivity.this, "nearest", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_add_place:
+                                Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_settings:
+                                Toast.makeText(MainActivity.this, "settings", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_help:
+                                Toast.makeText(MainActivity.this, "help", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.nav_feedback:
+                                Toast.makeText(MainActivity.this, "feedback", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-    }
-
-
-    /**
-     * Creates the menu button in action bar.
-     * @param menu  The action bar? I must admid that i'm not sure.
-     * @return      True to signal completion.
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
 
