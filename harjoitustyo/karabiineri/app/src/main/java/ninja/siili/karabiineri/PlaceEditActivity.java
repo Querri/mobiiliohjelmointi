@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +53,11 @@ public class PlaceEditActivity extends AppCompatActivity {
         mEdittextNotes = findViewById(R.id.et_notes);
         mButtonSave = findViewById(R.id.bt_save);
 
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            final double latitude = b.getDouble("lat");
+            final double longitude = b.getDouble("lng");
+        }
 
         mButtonSave.setOnClickListener( new View.OnClickListener() {
             public void onClick(View v) {

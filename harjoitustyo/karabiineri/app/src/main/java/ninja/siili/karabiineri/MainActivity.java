@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,10 +19,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,12 +51,12 @@ public class MainActivity extends AppCompatActivity implements
         GoogleMap.OnInfoWindowClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
-
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+    private FrameLayout mContainer;
 
 
     /**
@@ -58,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_drawer_menu);
-
 
         // Find drawer and set it's items clickable
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -79,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             case R.id.nav_add_place:
                                 Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
+                                addPicker();
                                 break;
                             case R.id.nav_settings:
                                 Toast.makeText(MainActivity.this, "settings", Toast.LENGTH_SHORT).show();
@@ -98,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
 
@@ -153,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
-
 
         // Enable location and move/zoom camera
         enableMyLocation();
@@ -212,5 +224,56 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
         intent.putExtra("id", (String) marker.getTag());
         startActivity(intent);
+    }
+
+
+    /**
+     * Adds a drop pin (kinda) to select a location for a new place
+     * and a button (kinda) to confirm selection.
+     */
+    public void addPicker() {
+
+        ImageView dropPinView = new ImageView(this);
+        dropPinView.setImageResource(R.drawable.ic_add);
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        dropPinView.getAdjustViewBounds();
+
+        float density = getResources().getDisplayMetrics().density;
+        params.bottomMargin = (int) (12 * density);
+
+        dropPinView.setLayoutParams(params);
+        mDrawerLayout.addView(dropPinView);
+
+
+
+        Button addPlaceButton = new Button(this);
+        addPlaceButton.setText(R.string.add_place);
+
+        Button bt = new Button(this);
+        bt.setText("A Button");
+
+        //float buttonDensity = getResources().getDisplayMetrics().density;
+        //buttonParams.bottomMargin = (int) (12 * buttonDensity);
+
+        addPlaceButton.setLayoutParams(new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
+        mDrawerLayout.addView(addPlaceButton);
+
+
+        addPlaceButton.setOnClickListener( new View.OnClickListener() {
+            public void onClick(View v) {
+
+                LatLng pinLocation = mMap.getCameraPosition().target;
+                double lat = pinLocation.latitude;
+                double lng = pinLocation.longitude;
+
+                Intent intent = new Intent(MainActivity.this, PlaceEditActivity.class);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lng", lng);
+                startActivity(intent);
+            }
+        });
     }
 }

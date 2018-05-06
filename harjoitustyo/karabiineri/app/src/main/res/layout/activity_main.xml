@@ -8,6 +8,11 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
+    <FrameLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <!-- map -->
         <fragment
             android:id="@+id/map"
@@ -15,6 +20,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MapActivity" />
+
+        <!-- drop pin -->
+        <TextView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/big_text_size"
+            android:text="NOTICE ME"/>
+
+
+    </FrameLayout>
+
+
 
     <!-- drawer -->
     <android.support.design.widget.NavigationView
