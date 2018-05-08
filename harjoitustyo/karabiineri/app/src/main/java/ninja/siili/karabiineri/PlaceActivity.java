@@ -1,6 +1,5 @@
 package ninja.siili.karabiineri;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
@@ -9,29 +8,36 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import ninja.siili.karabiineri.utilities.ParserUtils;
 
 public class PlaceActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
+    private View.OnClickListener arButtonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(PlaceActivity.this, ArActivity.class);
+            startActivity(intent);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
+
+        //viewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
+        //viewModel.init(drawer);
+
+        Button arButton = findViewById(R.id.bt_ar);
+        arButton.setOnClickListener(arButtonOnClickListener);
 
         // Set menu button in action bar
         ActionBar actionbar = getSupportActionBar();

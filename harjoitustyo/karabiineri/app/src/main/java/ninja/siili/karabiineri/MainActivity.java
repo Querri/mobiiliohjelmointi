@@ -4,39 +4,26 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Icon;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -45,6 +32,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import ninja.siili.karabiineri.utilities.ParserUtils;
+import ninja.siili.karabiineri.utilities.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -173,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements
         // Get last known location and focus the camera
         // FIXME
         // TODO check permission or redo with LocationListener
-        Location location = locationManager.getLastKnownLocation(locationManager
+        /*Location location = locationManager.getLastKnownLocation(locationManager
                 .getBestProvider(criteria, false));
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -182,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements
                 .target(latLng)
                 .zoom(11)
                 .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
     }
 
 
@@ -250,9 +240,6 @@ public class MainActivity extends AppCompatActivity implements
 
         Button addPlaceButton = new Button(this);
         addPlaceButton.setText(R.string.add_place);
-
-        Button bt = new Button(this);
-        bt.setText("A Button");
 
         //float buttonDensity = getResources().getDisplayMetrics().density;
         //buttonParams.bottomMargin = (int) (12 * buttonDensity);

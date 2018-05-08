@@ -1,4 +1,4 @@
-package ninja.siili.karabiineri;
+package ninja.siili.karabiineri.utilities;
 
 import android.content.Context;
 import android.util.JsonToken;
