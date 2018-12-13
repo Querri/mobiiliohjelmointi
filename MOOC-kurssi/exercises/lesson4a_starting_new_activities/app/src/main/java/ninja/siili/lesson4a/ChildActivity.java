@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.explicitintent;
+package ninja.siili.lesson4a;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ public class ChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
 
         /* Typical usage of findViewById... */
-        mDisplayText = (TextView) findViewById(R.id.tv_display);
+        mDisplayText = findViewById(R.id.tv_display);
 
         Intent intentThatStartedThisActivity = getIntent();
 
