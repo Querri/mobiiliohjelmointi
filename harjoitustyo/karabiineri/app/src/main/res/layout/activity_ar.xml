@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArActivity">
+    tools:context=".activities.ArActivity">
 
-    <Button
-        android:id="@+id/bt_save_anchors"
+    <!-- AR -->
+    <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
+        android:id="@+id/ux_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <!-- shows what mode is on -->
+    <TextView
+        android:id="@+id/tv_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/save" />
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fab_change_mode"
+        app:layout_constraintTop_toTopOf="@+id/fab_change_mode"
+        app:layout_constraintBottom_toBottomOf="@id/fab_change_mode"/>
 
-    <android.opengl.GLSurfaceView
-        android:id="@+id/surfaceview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="top" />
 
-</RelativeLayout>
+    <!-- info view -->
+    <include
+        android:id="@+id/include"
+        layout="@layout/route_info_edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <!-- FAB for showing info view -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_info_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="onClickToggleInfoView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fab_change_mode"/>
+        <!-- TODO better info icon -->
+        <!--android:src="@drawable/ic_baseline_info_24px"-->
+
+
+    <!-- FAB 2 -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_change_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClickChangeMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+        <!--android:src="@drawable/ic_baseline_add_24px"-->
+
+</android.support.constraint.ConstraintLayout>

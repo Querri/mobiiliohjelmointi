@@ -12,32 +12,47 @@
     <string name="routes_diff">REITTIEN TASO</string>
     <string name="routes_count">REITTIEN MÄÄRÄ</string>
     <string name="route_types">REITTITYYPIT</string>
-    <string name="place_type">PAIKAN TYYPPI</string>
-    <string name="price">HINTA</string>
-    <string name="open">AVOINNA</string>
-    <string name="parking">PARKKEERAUS</string>
-    <string name="addr">OSOITE</string>
-    <string name="notes">LISÄTIETOJA</string>
     <string name="desc">KUVAUS</string>
-    <string name="web">HTTP</string>
+    <string name="access">PÄÄSY PAIKKAAN</string>
     <string name="ar">AR</string>
 
     <!--    Edit place      -->
-    <string name="indoors">sisäseinä</string>
-    <string name="outdoors">ulkoseinä</string>
-    <string name="boulder">boulder</string>
     <string name="toprope">yläköysi</string>
     <string name="lead">alaköysi</string>
     <string name="route_diff_start">helpoin</string>
     <string name="route_diff_end">vaikein</string>
-    <string name="free_parking">ilmainen pysäköinti</string>
+
+    <string name="name_hint">Paikan nimi</string>
+    <string name="desc_hint">Kuvaus paikasta</string>
+    <string name="access_hint">Miten paikalle pääsee?</string>
 
     <!--    ??      -->
     <string name="save">TALLENNA</string>
     <string name="back">TAKAISIN</string>
 
+    <!-- Route Info -->
+    <string name="route_name">Reitin nimi</string>
+    <string name="route_diff">Reitin vaikeusaste</string>
+    <string name="route_type">Reitin tyyppi</string>
+    <string name="boulder">Boulder</string>
+    <string name="sport">Sport</string>
+    <string name="trad">Traditional</string>
+    <string name="onehold">Yhden käden aloitus</string>
+    <string name="twoholds">Kahden käden aloitus</string>
+    <string name="sitstart">Aloitus istualtaan</string>
+    <string name="topout">Lopetus kiven/kallion päälle</string>
+    <string name="notes">Lisätiedot</string>
+
+    <string name="nameless_route">Nimetön reitti</string>
+    <string name="grade_6a">6a</string>
+
+    <!-- Modes -->
+    <string name="add_route">Lisää uusi reitti klikkaamalla aloituskohtaa</string>
+    <string name="edit_route">Muokkaa reittiä</string>
+    <string name="route_active">Reitti aktiivisena</string>
+
     <!--    Permissions    -->
-    <string name="permission_rationale_location">Access to the location service is required to use the map feature, which shows your current location on the map.</string>
-    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Karabiineri\'.</string>
-    <string name="permission_required_toast">Location permission is required for this feature.</string>
+    <string name="permission_rationale_location">Sijaintidata tarvitaan sijainnin näyttämiseen kartalla.</string>
+    <string name="location_permission_denied">Sovellus tarvitsee luvan sijainnin käyttämiseen.</string>
+    <string name="permission_required_toast">Lupa sijainnin käyttämiseen tarvitaan tämän toiminnon toteuttamiseksi.</string>
 </resources>

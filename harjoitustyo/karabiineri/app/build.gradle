@@ -4,17 +4,39 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "ninja.siili.karabiineri"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            /*
+             * Sceneform is available for the following ABIs: arm64-v8a, armv7a,
+             * x86_64 and x86. This sample app enables arm64-v8a to run on
+             * devices and x86 to run on the emulator. Your application should
+             * list the ABIs most appropriate to minimize APK size (arm64-v8a recommended).
+             */
+            abiFilters 'arm64-v8a','x86'
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -25,7 +47,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:15.0.0'
     implementation 'com.android.support:design:27.1.1' // navigation drawer
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.google.ar:core:1.1.0' // ARCore library
 
     // Obj - a simple Wavefront OBJ file loader
     // https://github.com/javagl/Obj
@@ -35,4 +56,69 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // ARCore
+    implementation 'com.google.ar:core:1.1.0'
+    implementation "com.google.ar.sceneform:core:1.3.0"
+    implementation "com.google.ar.sceneform.ux:sceneform-ux:1.3.0"
+
+    // Lifecycle
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    // Room database
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // DAGGER 2
+    implementation 'com.google.dagger:dagger-android:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
 }
+
+apply plugin: 'com.google.ar.sceneform.plugin'
+
+sceneform.asset('sampledata/models/cylinder_green/cylinder_green.obj',
+        'default',
+        'sampledata/models/cylinder_green/cylinder_green.sfa',
+        'src/main/assets/cylinder_green')
+
+sceneform.asset('sampledata/models/cylinder_orange/cylinder_orange.obj',
+        'default',
+        'sampledata/models/cylinder_orange/cylinder_orange.sfa',
+        'src/main/assets/cylinder_orange')
+
+sceneform.asset('sampledata/models/cylinder_red/cylinder_red.obj',
+        'default',
+        'sampledata/models/cylinder_red/cylinder_red.sfa',
+        'src/main/assets/cylinder_red')
+
+sceneform.asset('sampledata/models/cylinder_yellow/cylinder_yellow.obj',
+        'default',
+        'sampledata/models/cylinder_yellow/cylinder_yellow.sfa',
+        'src/main/assets/cylinder_yellow')
+
+sceneform.asset('sampledata/models/sphere_red/sphere_red.obj',
+        'default',
+        'sampledata/models/sphere_red/sphere_red.sfa',
+        'src/main/assets/sphere_red')
+
+sceneform.asset('sampledata/models/sphere_green/sphere_green.obj',
+        'default',
+        'sampledata/models/sphere_green/sphere_green.sfa',
+        'src/main/assets/sphere_green')
+
+sceneform.asset('sampledata/models/sphere_orange/sphere_orange.obj',
+        'default',
+        'sampledata/models/sphere_orange/sphere_orange.sfa',
+        'src/main/assets/sphere_orange')
+
+sceneform.asset('sampledata/models/sphere_yellow/sphere_yellow.obj',
+        'default',
+        'sampledata/models/sphere_yellow/sphere_yellow.sfa',
+        'src/main/assets/sphere_yellow')
