@@ -1,4 +1,4 @@
-vuoden 2019 Tampereen Teknillisen Yliopiston 5op. kurssi mobiiliohjelmoinnista. Kurssi järjestetään pääasiassa Porista käsin, joten suurena osana kurssin suoritusta on oppimispäiväkirjan pito. Dokumentoituna on kaikista tehtävistä työselostukset, tehtävään käytetty aika ja kommentit suorituksesta.
+Vuoden 2019 Tampereen Teknillisen Yliopiston 5op. kurssi mobiiliohjelmoinnista. Kurssi järjestetään pääasiassa Porista käsin, joten suurena osana kurssin suoritusta on oppimispäiväkirjan pito. Dokumentoituna on kaikista tehtävistä työselostukset, tehtävään käytetty aika ja kommentit suorituksesta.
 
 Itse harjoitukset koostuvat kolmesta osasta: harjoitustehtävät, Googlen Udacity-kurssi Android Sovelluksien kehityksestä ja laaja harjoitustyö.
 
