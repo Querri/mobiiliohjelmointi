@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
-    private FrameLayout mContainer;
 
     private PlaceViewModel mPlaceViewModel;
     public static final int NEW_PLACE_ACTIVITY_REQUEST_CODE = 1;
@@ -113,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         // Get a new or existing ViewModel from the ViewModelProvider.
         mPlaceViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
     }
@@ -139,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    /** Update the map markers **/
     private void updatePlaceMarkers() {
         mPlaceViewModel.getAllPlaces().observe(this, new Observer<List<Place>>() {
             @Override
@@ -191,9 +190,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /**
-     * Checks permissions and enables user's location.
-     */
+    /** Checks permissions and enables user's location. */
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -207,9 +204,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /**
-     * Locationpermission was denied and something happens here. Must investigate further.
-     */
+    /** Locationpermission was denied and something happens here. Must investigate further. */
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();

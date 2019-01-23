@@ -58,9 +58,7 @@ public class RouteInfo {
 
 
 
-    /**
-     * Set and get difficulty color based on difficulty.
-     */
+    /** Set and get difficulty color based on difficulty */
     private void setDifficulty(int diff) {
         mDiff = diff;
         if (mDiff < 9) {
@@ -73,6 +71,7 @@ public class RouteInfo {
             mDiffColor = mContext.getColor(R.color.red);
         }
     }
+
 
     public int getDifficultyColor() {
         return mDiffColor;

@@ -1,7 +1,6 @@
 package ninja.siili.karabiineri.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,12 +16,10 @@ import android.widget.Toast;
 import ninja.siili.karabiineri.Place;
 import ninja.siili.karabiineri.R;
 import ninja.siili.karabiineri.RouteInfo;
-import ninja.siili.karabiineri.utilities.ParserUtils;
 
 public class PlaceActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    private Place mPlace;
 
     private View.OnClickListener arButtonOnClickListener = new View.OnClickListener() {
         @Override
@@ -93,23 +90,8 @@ public class PlaceActivity extends AppCompatActivity {
             TextView descTextView = findViewById(R.id.tv_desc);
             TextView accessTextView = findViewById(R.id.tv_access);
 
-            /*mPlaceViewModel.getPlaceById(id).observe(this, new Observer<Place>() {
-                        @Override
-                        public void onChanged(@Nullable final Place place) {
-                            // Update the cached copy of the words in the adapter.
-                            titleTextView.setText(place.getName());
-                        }
-                    });*/
+            // TODO get the correct Place from the database and populate fields.
 
-            TextView[] textViews = {titleTextView, routeTypeTextView, routeDiffStartTextView,
-                    routeDiffEndTextView, descTextView, accessTextView};
-            String[] keys = ParserUtils.getKeys("place");
-
-            /*int i = 0;
-            for (TextView textView : textViews) {
-                textView.setText(ParserUtils.getFieldText(this, "place", Integer.toString(id), keys[i]));
-                i++;
-            }*/
         } else {
             Toast.makeText(this, "no id in tag", Toast.LENGTH_SHORT).show();
             // TODO make actual exception, tea biscuits
@@ -134,18 +116,5 @@ public class PlaceActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    /**
-     * Opens a webpage associated with a place with given id.
-     * @param id    Id is used to find the correct JSONObject.
-     */
-    private void openWebPage(String id) {
-        String urlAsString = ParserUtils.getFieldText(PlaceActivity.this, "place", id, "web");
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlAsString));
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
 }

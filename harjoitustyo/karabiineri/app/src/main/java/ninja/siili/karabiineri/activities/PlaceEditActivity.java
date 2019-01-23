@@ -42,6 +42,8 @@ public class PlaceEditActivity extends AppCompatActivity {
             mLocation = b.getDoubleArray("location");
         }
 
+
+        // Save button is clicked
         mButtonSave.setOnClickListener( new View.OnClickListener() {
             public void onClick(View v) {
                 Intent replyIntent = new Intent();
