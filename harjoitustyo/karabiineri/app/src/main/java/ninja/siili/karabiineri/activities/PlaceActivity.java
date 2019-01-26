@@ -58,9 +58,6 @@ public class PlaceActivity extends AppCompatActivity {
 
                         // TODO actual navigation
                         switch (itemId) {
-                            case R.id.nav_nearest_place:
-                                Toast.makeText(PlaceActivity.this, "nearest", Toast.LENGTH_SHORT).show();
-                                break;
                             case R.id.nav_add_place:
                                 Toast.makeText(PlaceActivity.this, "add", Toast.LENGTH_SHORT).show();
                                 break;

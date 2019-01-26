@@ -81,9 +81,6 @@ public class MainActivity extends AppCompatActivity implements
 
                         // TODO actual navigation
                         switch (itemId) {
-                            case R.id.nav_nearest_place:
-                                Toast.makeText(MainActivity.this, "nearest", Toast.LENGTH_SHORT).show();
-                                break;
                             case R.id.nav_add_place:
                                 Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
                                 addPlacePicker();
