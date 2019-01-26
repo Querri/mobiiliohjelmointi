@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
+import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,20 +18,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -51,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements
     private boolean mPermissionDenied = false;
 
     private GoogleMap mMap;
+
     private DrawerLayout mDrawerLayout;
 
     private PlaceViewModel mPlaceViewModel;
@@ -90,8 +86,7 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             case R.id.nav_add_place:
                                 Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
-                                //addPicker();
-                                placeMarker();
+                                addPlacePicker();
                                 break;
                             case R.id.nav_settings:
                                 Toast.makeText(MainActivity.this, "settings", Toast.LENGTH_SHORT).show();
@@ -142,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements
         mPlaceViewModel.getAllPlaces().observe(this, new Observer<List<Place>>() {
             @Override
             public void onChanged(@Nullable List<Place> places) {
-                if (places != null) {for (Place place : places) {
+                if (places != null) {
+                    for (Place place : places) {
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(place.getLocation())
                                 .title(place.getName())
@@ -162,31 +158,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        updatePlaceMarkers();
-
-        //Set infowindowclicklistener
         mMap.setOnInfoWindowClickListener(this);
 
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-
-        // Enable location
         enableMyLocation();
-
-        // Get last known location and focus the camera
-        // FIXME check permission or redo with LocationListener
-        /*Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)
-                .zoom(11)
-                .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
+        updatePlaceMarkers();
     }
 
 
@@ -198,13 +173,30 @@ public class MainActivity extends AppCompatActivity implements
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (mMap != null) {
-            // Access to the location has been granted to the app.
+            // Access to the location has been granted.
             mMap.setMyLocationEnabled(true);
+
+            LocationManager locationManager = (LocationManager)
+                    getSystemService(Context.LOCATION_SERVICE);
+
+            // Get current location and move/zoom the camera to it.
+            if (locationManager != null) {
+                Location location = locationManager.getLastKnownLocation(
+                        locationManager.getBestProvider(new Criteria(), false));
+
+                if (location != null) {
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                            .zoom(11)
+                            .build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+            }
         }
     }
 
 
-    /** Locationpermission was denied and something happens here. Must investigate further. */
+    /** LocationPermission was denied and something happens here. Must investigate further. */
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
@@ -215,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /** Mapmarker's infowindow was clicked and the correct placeActivity must be started. */
+    /** Map marker's infoWindow was clicked, start the placeActivity */
     @Override
     public void onInfoWindowClick(Marker marker) {
         if (marker.getTag() != null) {
@@ -262,11 +254,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /** Place a marker to add a new place **/
-    public void placeMarker() {
+    /** Add a marker to mark a new Place **/
+    public void addPlacePicker() {
         Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(mMap.getCameraPosition().target)
-                .title("Click to add info")
+                .title(getString(R.string.marker_text))
                 .draggable(true));
         marker.setTag("edit");
     }

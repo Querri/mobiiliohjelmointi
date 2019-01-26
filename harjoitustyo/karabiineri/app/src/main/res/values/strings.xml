@@ -22,6 +22,7 @@
     <string name="route_diff_start">helpoin</string>
     <string name="route_diff_end">vaikein</string>
 
+    <string name="marker_text">Lisää paikan tiedot</string>
     <string name="name_hint">Paikan nimi</string>
     <string name="desc_hint">Kuvaus paikasta</string>
     <string name="access_hint">Miten paikalle pääsee?</string>
