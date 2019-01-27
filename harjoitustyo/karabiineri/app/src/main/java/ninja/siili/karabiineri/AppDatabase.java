@@ -15,7 +15,7 @@ import ninja.siili.karabiineri.interfaces.PlaceDao;
 import ninja.siili.karabiineri.utilities.Converters;
 
 
-@Database(entities = {Place.class}, version = 4)
+@Database(entities = {Place.class}, version = 5)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();
