@@ -3,29 +3,52 @@ package ninja.siili.karabiineri;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ninja.siili.karabiineri.interfaces.PlaceDao;
+
+
 public class PlaceViewModel extends AndroidViewModel {
-    private PlaceRepository mRepository;
-    private LiveData<List<Place>> mAllPlaces;
+
+    private PlaceDao mPlaceDao;
+
+    private LiveData<Place> mPlaceLiveData;
+    private LiveData<List<Place>> mAllPlacesLiveData;
 
 
-    public PlaceViewModel(Application application) {
+    public PlaceViewModel(@NonNull Application application) {
         super(application);
-        mRepository = new PlaceRepository(application);
-        mAllPlaces = mRepository.getAllPlaces();
+        mPlaceDao = AppDatabase.getDatabase(application).placeDao();
     }
 
 
-    /** Return all places in database */
-    public LiveData<List<Place>> getAllPlaces() {
-        return mAllPlaces;
+    /** Initiate with all Places */
+    public void init() {
+        mAllPlacesLiveData = mPlaceDao.getAllPlaces();
     }
 
 
-    /** Insert a new place into database */
+    /** Initiate with a Place with spesific ID */
+    public void init(int placeId) {
+        mPlaceLiveData = mPlaceDao.getPlaceWithId(placeId);
+    }
+
+
+    /** Get a list of the LiveDataObjects of the initiated Places */
+    public LiveData<List<Place>> getAllPlacesLiveData() {
+        return mAllPlacesLiveData;
+    }
+
+
+    /** Get the LiveDataObject of the initiated Place */
+    public LiveData<Place> getPlaceLiveData() {
+        return mPlaceLiveData;
+    }
+
+
     public void insert(Place place) {
-        mRepository.insert(place);
+        mPlaceDao.insert(place);
     }
 }

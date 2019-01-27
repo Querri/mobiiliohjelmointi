@@ -15,7 +15,7 @@ import ninja.siili.karabiineri.interfaces.PlaceDao;
 import ninja.siili.karabiineri.utilities.Converters;
 
 
-@Database(entities = {Place.class}, version = 1)
+@Database(entities = {Place.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();
@@ -45,8 +45,8 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-            // don't keep data over app restart, for now
-            new PopulateDbAsync(INSTANCE).execute();
+            // populate again on every restart
+            //new PopulateDbAsync(INSTANCE).execute();
         }
     };
 

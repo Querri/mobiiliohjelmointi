@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         mPlaceViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
+        mPlaceViewModel.init();
     }
 
 
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements
 
     /** Update the map markers **/
     private void updatePlaceMarkers() {
-        mPlaceViewModel.getAllPlaces().observe(this, new Observer<List<Place>>() {
+        mPlaceViewModel.getAllPlacesLiveData().observe(this, new Observer<List<Place>>() {
             @Override
             public void onChanged(@Nullable List<Place> places) {
                 if (places != null) {
@@ -139,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(place.getLocation())
                                 .title(place.getName())
-                                .snippet(place.getDesc()));
-                        marker.setTag("view");
+                                .snippet("ID: " + Integer.toString(place.getId())));
+                        marker.setTag(place.getId());
                     }
                 }
             }
@@ -209,16 +210,19 @@ public class MainActivity extends AppCompatActivity implements
     public void onInfoWindowClick(Marker marker) {
         if (marker.getTag() != null) {
             if (marker.getTag().equals("edit")) {
+                // marker was just added
                 LatLng markerPosition = marker.getPosition();
 
                 Intent intent = new Intent(MainActivity.this, PlaceEditActivity.class);
-                intent.putExtra("id", 0);
+                intent.putExtra("id", 56);
                 intent.putExtra("location", new double[] {markerPosition.latitude, markerPosition.longitude});
                 marker.remove();
                 startActivityForResult(intent, NEW_PLACE_ACTIVITY_REQUEST_CODE);
-            } else if (marker.getTag().equals("view")) {
+
+            } else {
+                // marker of an existing place
                 Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
-                intent.putExtra("id", 0);
+                intent.putExtra("id", (int) marker.getTag());
                 startActivity(intent);
             }
         } else {
@@ -239,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements
                         data.getStringExtra("desc"),
                         data.getStringExtra("access"),
                         new LatLng(location[0], location[1]));
-                mPlaceViewModel.insert(place);
+                mPlaceViewModel.insert(place);  // FIXME will crash
                 updatePlaceMarkers();
                 return;
             }

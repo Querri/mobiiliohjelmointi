@@ -16,8 +16,11 @@ public interface PlaceDao {
     @Query("SELECT * FROM place_table")
     LiveData<List<Place>> getAllPlaces();
 
-    @Query(("SELECT * FROM place_table WHERE id LIKE :id"))
+    @Query(("SELECT * FROM place_table WHERE mID LIKE :id"))
     LiveData<Place> getPlaceWithId(int id);
+
+    @Query(("SELECT * FROM place_table WHERE mID LIKE :name"))
+    LiveData<Place> getPlaceWithName(String name);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Place place);

@@ -1,6 +1,9 @@
 package ninja.siili.karabiineri.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,12 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ninja.siili.karabiineri.Place;
+import ninja.siili.karabiineri.PlaceViewModel;
 import ninja.siili.karabiineri.R;
 import ninja.siili.karabiineri.RouteInfo;
 
 public class PlaceActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private PlaceViewModel mPlaceViewModel;
 
     private View.OnClickListener arButtonOnClickListener = new View.OnClickListener() {
         @Override
@@ -76,22 +81,37 @@ public class PlaceActivity extends AppCompatActivity {
                 });
 
 
+        TextView nameTextView = findViewById(R.id.tv_name);
+        TextView routeTypeTextView = findViewById(R.id.tv_route_types);
+        TextView routeDiffStartTextView = findViewById(R.id.tv_route_diff_start);
+        TextView routeDiffEndTextView = findViewById(R.id.tv_route_diff_end);
+        TextView descTextView = findViewById(R.id.tv_desc);
+        TextView accessTextView = findViewById(R.id.tv_access);
+
+        // get bundle from intent
         Bundle b = getIntent().getExtras();
         if (b != null) {
             int id = b.getInt("id");
 
-            TextView titleTextView = findViewById(R.id.tv_title);
-            TextView routeTypeTextView = findViewById(R.id.tv_route_types);
-            TextView routeDiffStartTextView = findViewById(R.id.tv_route_diff_start);
-            TextView routeDiffEndTextView = findViewById(R.id.tv_route_diff_end);
-            TextView descTextView = findViewById(R.id.tv_desc);
-            TextView accessTextView = findViewById(R.id.tv_access);
+            // Get the PlaceViewModel
+            mPlaceViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
+            mPlaceViewModel.init(id);
 
-            // TODO get the correct Place from the database and populate fields.
-
+            // Observe PlaceLiveData and get it's info to populate fields.
+            mPlaceViewModel.getPlaceLiveData().observe(this, new Observer<Place>() {
+                @Override
+                public void onChanged(@Nullable final Place place) {
+                    if (place != null) {
+                        nameTextView.setText(place.getName());
+                        descTextView.setText(place.getDesc());
+                        accessTextView.setText(place.getAccess());
+                    } else {
+                        Toast.makeText(PlaceActivity.this, "null Place" + Integer.toString(id), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         } else {
             Toast.makeText(this, "no id in tag", Toast.LENGTH_SHORT).show();
-            // TODO make actual exception, tea biscuits
         }
     }
 
