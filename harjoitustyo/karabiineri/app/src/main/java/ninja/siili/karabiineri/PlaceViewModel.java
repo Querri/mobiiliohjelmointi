@@ -7,12 +7,9 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import ninja.siili.karabiineri.interfaces.PlaceDao;
-
 
 public class PlaceViewModel extends AndroidViewModel {
-
-    private PlaceDao mPlaceDao;
+    private PlaceRepository mPlaceRepository;
 
     private LiveData<Place> mPlaceLiveData;
     private LiveData<List<Place>> mAllPlacesLiveData;
@@ -20,19 +17,21 @@ public class PlaceViewModel extends AndroidViewModel {
 
     public PlaceViewModel(@NonNull Application application) {
         super(application);
-        mPlaceDao = AppDatabase.getDatabase(application).placeDao();
+        mPlaceRepository = new PlaceRepository(application);
     }
 
 
     /** Initiate with all Places */
     public void init() {
-        mAllPlacesLiveData = mPlaceDao.getAllPlaces();
+        mPlaceRepository.init();
+        mAllPlacesLiveData = mPlaceRepository.getAllPlacesLiveData();
     }
 
 
-    /** Initiate with a Place with spesific ID */
+    /** Initiate with a Place with specific ID */
     public void init(int placeId) {
-        mPlaceLiveData = mPlaceDao.getPlaceWithId(placeId);
+        mPlaceRepository.init(placeId);
+        mPlaceLiveData = mPlaceRepository.getPlaceLiveData();
     }
 
 
@@ -48,7 +47,8 @@ public class PlaceViewModel extends AndroidViewModel {
     }
 
 
+    /** Insert a new Place */
     public void insert(Place place) {
-        mPlaceDao.insert(place);
+        mPlaceRepository.insert(place);
     }
 }

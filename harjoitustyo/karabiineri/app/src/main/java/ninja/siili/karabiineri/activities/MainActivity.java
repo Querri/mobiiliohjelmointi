@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements
                         data.getStringExtra("desc"),
                         data.getStringExtra("access"),
                         new LatLng(location[0], location[1]));
-                mPlaceViewModel.insert(place);  // FIXME will crash
+                mPlaceViewModel.insert(place);
                 updatePlaceMarkers();
                 return;
             }
