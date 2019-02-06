@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ninja.siili.karabiineri.utilities.Converters;
+import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 
 /** Stores information about the route. */
 public class RouteInfo {
@@ -149,7 +150,7 @@ public class RouteInfo {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 setDifficulty(progress);
-                diffTextView.setText(Converters.fromIntToGrade(mDiff));
+                diffTextView.setText(RouteInfoHelper.getDiffString(mDiff));
                 diffTextView.setTextColor(getDifficultyColor());
             }
 
@@ -205,7 +206,7 @@ public class RouteInfo {
             }
 
             nameTV.setText(getName());
-            diffTV.setText(Converters.fromIntToGrade(mDiff));
+            diffTV.setText(RouteInfoHelper.getDiffString(mDiff));
             diffTV.setTextColor(mDiffColor);
             typeTV.setText(getTypeString());
 

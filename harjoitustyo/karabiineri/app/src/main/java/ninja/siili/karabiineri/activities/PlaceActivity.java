@@ -26,6 +26,7 @@ import ninja.siili.karabiineri.R;
 import ninja.siili.karabiineri.Route;
 import ninja.siili.karabiineri.RouteInfo;
 import ninja.siili.karabiineri.RouteViewModel;
+import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -147,8 +148,12 @@ public class PlaceActivity extends AppCompatActivity {
                         }
                         routeTypeTextView.setText(typeBuilder.toString());
 
-                        routeDiffStartTextView.setText(String.valueOf(minDiff));
-                        routeDiffEndTextView.setText(String.valueOf(maxDiff));
+                        routeDiffStartTextView.setText(RouteInfoHelper.getDiffString(minDiff));
+                        routeDiffStartTextView.setTextColor(RouteInfoHelper.getDiffColor(
+                                PlaceActivity.this, minDiff));
+                        routeDiffEndTextView.setText(RouteInfoHelper.getDiffString(maxDiff));
+                        routeDiffEndTextView.setTextColor(RouteInfoHelper.getDiffColor(
+                                PlaceActivity.this, maxDiff));
                     }
                 }
             });
