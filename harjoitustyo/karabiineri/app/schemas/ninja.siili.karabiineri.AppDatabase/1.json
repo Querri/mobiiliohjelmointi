@@ -2,46 +2,46 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aff9163121e7883149b790d34992396c",
+    "identityHash": "87f861b24c7913303e78e628f3a361aa",
     "entities": [
       {
         "tableName": "place_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `location` TEXT, `name` TEXT, `desc` TEXT, `access` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mName` TEXT, `mDesc` TEXT, `mAccess` TEXT, `mLocation` TEXT)",
         "fields": [
           {
             "fieldPath": "mID",
-            "columnName": "id",
+            "columnName": "mID",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "mLocation",
-            "columnName": "location",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
             "fieldPath": "mName",
-            "columnName": "name",
+            "columnName": "mName",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "mDesc",
-            "columnName": "desc",
+            "columnName": "mDesc",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "mAccess",
-            "columnName": "access",
+            "columnName": "mAccess",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mLocation",
+            "columnName": "mLocation",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "mID"
           ],
           "autoGenerate": true
         },
@@ -51,7 +51,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"aff9163121e7883149b790d34992396c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"87f861b24c7913303e78e628f3a361aa\")"
     ]
   }
 }

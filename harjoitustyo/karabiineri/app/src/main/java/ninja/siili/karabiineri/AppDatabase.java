@@ -12,13 +12,15 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
 
 import ninja.siili.karabiineri.interfaces.PlaceDao;
+import ninja.siili.karabiineri.interfaces.RouteDao;
 import ninja.siili.karabiineri.utilities.Converters;
 
 
-@Database(entities = {Place.class}, version = 5)
+@Database(entities = {Place.class, Route.class}, version = 8)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();
+    public abstract RouteDao routeDao();
 
     // volatile to ensure atomic access to the variable
     private static volatile AppDatabase INSTANCE;

@@ -26,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MapActivity" />
         <activity android:name=".activities.PlaceActivity" />
         <activity android:name=".activities.PlaceEditActivity" />
         <activity android:name=".activities.ArActivity" />

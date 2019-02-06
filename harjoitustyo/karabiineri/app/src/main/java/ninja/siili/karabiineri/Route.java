@@ -1,5 +1,9 @@
 package ninja.siili.karabiineri;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.content.Context;
 import android.view.View;
 
@@ -10,29 +14,56 @@ import java.util.ArrayList;
 
 import ninja.siili.karabiineri.utilities.RenderableHelper;
 
-/**
- * Route is an entity that consists of multiple Clips and a RouteInfo.
- */
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+/** Route is an entity that consists of multiple Clips and a RouteInfo. */
+@Entity(tableName = "route_table",
+        foreignKeys = @ForeignKey(entity = Place.class,
+                parentColumns = "mID",
+                childColumns = "mPlaceID",
+                onDelete = CASCADE))
 public class Route {
 
+    @PrimaryKey(autoGenerate = true)
+    public int mID;
+
+    public int mPlaceID;
+
+    public String mName;
+
+    @Ignore
     private Context mContext;
+
+    @Ignore
     private TransformationSystem mTransformationSystem;
+
+    @Ignore
     private RenderableHelper mRenderableHelper;
 
+    @Ignore
     private ArrayList<Clip> mClips = new ArrayList<>();
+
+    @Ignore
     private int mSelectedClipPosition = 0;
 
+    @Ignore
     private RouteInfo mRouteInfo;
 
 
+    public Route(int placeID, String name) {
+        mPlaceID = placeID;
+        mName = name;
+    }
+
+
     /**
-     * Constructor for Route.
+     * Initiation
      * @param context App's context.
      * @param transformationSystem TransformationSystem for TransformableNodes.
      * @param renderableHelper RenderableHelper to provide correct Renderables.
      */
-    public Route(Context context,
-                 TransformationSystem transformationSystem, RenderableHelper renderableHelper) {
+    public void init(Context context, TransformationSystem transformationSystem,
+                     RenderableHelper renderableHelper) {
         mContext = context;
         mTransformationSystem = transformationSystem;
         mRenderableHelper = renderableHelper;

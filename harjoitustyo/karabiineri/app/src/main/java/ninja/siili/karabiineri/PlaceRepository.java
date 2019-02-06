@@ -7,17 +7,23 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import ninja.siili.karabiineri.interfaces.PlaceDao;
+import ninja.siili.karabiineri.interfaces.RouteDao;
 
 
 public class PlaceRepository {
     private PlaceDao mPlaceDao;
+    private RouteDao mRouteDao;
 
     private LiveData<List<Place>> mAllPlacesLiveData;
     private LiveData<Place> mPlaceLiveData;
 
+    private LiveData<List<Route>> mAllRoutesLiveData;
+    private LiveData<List<Route>> mAllRoutesInPlaceLiveData;
+
 
     PlaceRepository(Application application) {
         mPlaceDao = AppDatabase.getDatabase(application).placeDao();
+        mRouteDao = AppDatabase.getDatabase(application).routeDao();
     }
 
 
@@ -30,6 +36,7 @@ public class PlaceRepository {
     /** Initiate with a Place with specific ID */
     public void init(int placeId) {
         mPlaceLiveData = mPlaceDao.getPlaceWithId(placeId);
+        mAllRoutesInPlaceLiveData = mRouteDao.getRoutesInPlace(placeId);
     }
 
 
@@ -45,24 +52,55 @@ public class PlaceRepository {
     }
 
 
+    LiveData<List<Route>> getAllRoutesInPlaceLiveData() {
+        return mAllRoutesInPlaceLiveData;
+    }
+
+
+
+
+    // TODO combine
     /** Insert a new Place */
-    void insert(Place place) {
+    void insertPlace(Place place) {
         // must be done on a non-UI thread or the app will crash.
-        new insertAsyncTask(mPlaceDao).execute(place);
+        new insertPlaceAsyncTask(mPlaceDao).execute(place);
+    }
+
+
+    /** Insert a new Route **/
+    void insertRoute(Route route) {
+        new insertRouteAsyncTask(mRouteDao).execute(route);
     }
 
 
     /** Asynchronous task for inserting a Place to database */
-    private static class insertAsyncTask extends AsyncTask<Place, Void, Void> {
+    private static class insertPlaceAsyncTask extends AsyncTask<Place, Void, Void> {
         private PlaceDao mAsyncTaskDao;
 
-        insertAsyncTask(PlaceDao dao) {
+        insertPlaceAsyncTask(PlaceDao dao) {
             mAsyncTaskDao = dao;
         }
 
 
         @Override
         protected Void doInBackground(final Place... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+
+    /** Asynchronous task for inserting a Route to database */
+    private static class insertRouteAsyncTask extends AsyncTask<Route, Void, Void> {
+        private RouteDao mAsyncTaskDao;
+
+        insertRouteAsyncTask(RouteDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+
+        @Override
+        protected Void doInBackground(final Route... params) {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }

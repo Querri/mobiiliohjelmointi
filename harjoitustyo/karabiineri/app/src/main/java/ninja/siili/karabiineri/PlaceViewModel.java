@@ -49,6 +49,6 @@ public class PlaceViewModel extends AndroidViewModel {
 
     /** Insert a new Place */
     public void insert(Place place) {
-        mPlaceRepository.insert(place);
+        mPlaceRepository.insertPlace(place);
     }
 }

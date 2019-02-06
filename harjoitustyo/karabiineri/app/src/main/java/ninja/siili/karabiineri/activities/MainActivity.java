@@ -43,14 +43,13 @@ public class MainActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    public static final int NEW_PLACE_ACTIVITY_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
 
     private GoogleMap mMap;
-
     private DrawerLayout mDrawerLayout;
-
     private PlaceViewModel mPlaceViewModel;
-    public static final int NEW_PLACE_ACTIVITY_REQUEST_CODE = 1;
+
 
 
     /**
@@ -255,7 +254,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /** Add a marker to mark a new Place **/
+    /** Add a new marker to map to mark a new Place
+     * Clicking the marker's title will start the intent for adding the place's info.
+     */
     public void addPlacePicker() {
         Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(mMap.getCameraPosition().target)
