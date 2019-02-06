@@ -10,7 +10,7 @@ import ninja.siili.karabiineri.interfaces.PlaceDao;
 import ninja.siili.karabiineri.interfaces.RouteDao;
 
 
-public class PlaceRepository {
+public class DataRepository {
     private PlaceDao mPlaceDao;
     private RouteDao mRouteDao;
 
@@ -21,7 +21,7 @@ public class PlaceRepository {
     private LiveData<List<Route>> mAllRoutesInPlaceLiveData;
 
 
-    PlaceRepository(Application application) {
+    DataRepository(Application application) {
         mPlaceDao = AppDatabase.getDatabase(application).placeDao();
         mRouteDao = AppDatabase.getDatabase(application).routeDao();
     }

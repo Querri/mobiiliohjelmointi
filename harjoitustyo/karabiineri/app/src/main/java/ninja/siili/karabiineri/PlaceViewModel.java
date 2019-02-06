@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class PlaceViewModel extends AndroidViewModel {
-    private PlaceRepository mPlaceRepository;
+    private DataRepository mDataRepository;
 
     private LiveData<Place> mPlaceLiveData;
     private LiveData<List<Place>> mAllPlacesLiveData;
@@ -17,21 +17,21 @@ public class PlaceViewModel extends AndroidViewModel {
 
     public PlaceViewModel(@NonNull Application application) {
         super(application);
-        mPlaceRepository = new PlaceRepository(application);
+        mDataRepository = new DataRepository(application);
     }
 
 
     /** Initiate with all Places */
     public void init() {
-        mPlaceRepository.init();
-        mAllPlacesLiveData = mPlaceRepository.getAllPlacesLiveData();
+        mDataRepository.init();
+        mAllPlacesLiveData = mDataRepository.getAllPlacesLiveData();
     }
 
 
     /** Initiate with a Place with specific ID */
     public void init(int placeId) {
-        mPlaceRepository.init(placeId);
-        mPlaceLiveData = mPlaceRepository.getPlaceLiveData();
+        mDataRepository.init(placeId);
+        mPlaceLiveData = mDataRepository.getPlaceLiveData();
     }
 
 
@@ -49,6 +49,6 @@ public class PlaceViewModel extends AndroidViewModel {
 
     /** Insert a new Place */
     public void insert(Place place) {
-        mPlaceRepository.insertPlace(place);
+        mDataRepository.insertPlace(place);
     }
 }
