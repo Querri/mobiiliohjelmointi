@@ -16,15 +16,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import ninja.siili.karabiineri.Place;
 import ninja.siili.karabiineri.PlaceViewModel;
 import ninja.siili.karabiineri.R;
+import ninja.siili.karabiineri.Route;
 import ninja.siili.karabiineri.RouteInfo;
+import ninja.siili.karabiineri.RouteViewModel;
 
 public class PlaceActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private PlaceViewModel mPlaceViewModel;
+    private RouteViewModel mRouteViewModel;
 
     private View.OnClickListener arButtonOnClickListener = new View.OnClickListener() {
         @Override
@@ -107,6 +114,41 @@ public class PlaceActivity extends AppCompatActivity {
                         accessTextView.setText(place.getAccess());
                     } else {
                         Toast.makeText(PlaceActivity.this, "null Place" + Integer.toString(id), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
+            // Get the RouteViewModel
+            mRouteViewModel = ViewModelProviders.of(this).get(RouteViewModel.class);
+            mRouteViewModel.init(id);
+            //mRouteViewModel.insertRoute(new Route(id, "hi route", 1, "sport", 2, false, false, ""));
+
+            // Observe LiveData of all Routes in this Place, and use it to populate fields.
+            mRouteViewModel.getAllRoutesLiveData().observe(this, new Observer<List<Route>>() {
+                @Override
+                public void onChanged(@Nullable List<Route> routes) {
+                    if (routes != null) {
+                        List<String> routeNames = new ArrayList<>();
+                        List<String> routeTypes = new ArrayList<>();
+                        int minDiff = 100;
+                        int maxDiff = 0;
+
+                        for (Route route : routes) {
+                            routeNames.add(route.mName);
+                            if (!routeTypes.contains(route.mType)) routeTypes.add(route.mType);
+                            if (route.mDiff < minDiff) minDiff = route.mDiff;
+                            if (route.mDiff > maxDiff) maxDiff = route.mDiff;
+                        }
+
+                        StringBuilder typeBuilder = new StringBuilder();
+                        for (String type : routeTypes) {
+                            typeBuilder.append(type);
+                        }
+                        routeTypeTextView.setText(typeBuilder.toString());
+
+                        routeDiffStartTextView.setText(String.valueOf(minDiff));
+                        routeDiffEndTextView.setText(String.valueOf(maxDiff));
                     }
                 }
             });

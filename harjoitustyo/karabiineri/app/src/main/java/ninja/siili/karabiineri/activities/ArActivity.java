@@ -207,10 +207,11 @@ public class ArActivity extends AppCompatActivity {
             for (HitResult hit : frame.hitTest(tap)) {
                 Trackable trackable = hit.getTrackable();
                 if (trackable instanceof Point) {
-                    Route newRoute = new Route(0, "Hi I'm a route");
+                    // FIXME, constructor arguments
+                    /*Route newRoute = new Route(0, "Hi I'm a route");
                     newRoute.init(this, arFragment.getTransformationSystem(), mRenderableHelper);
                     newRoute.addClip(hit);
-                    mRoutes.add(newRoute);
+                    mRoutes.add(newRoute);*/
                     return true;
                 }
             }

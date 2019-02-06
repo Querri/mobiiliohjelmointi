@@ -27,9 +27,19 @@ public class Route {
     @PrimaryKey(autoGenerate = true)
     public int mID;
 
+    // FIXME
+    // mPlaceID column references a foreign key but it is not part of an index.
+    // This may trigger full table scans whenever parent table is modified so
+    // you are highly advised to create an index that covers this column.
     public int mPlaceID;
 
     public String mName;
+    public int mDiff;
+    public String mType;
+    public int mStartHoldCount;
+    public boolean mIsSitStart;
+    public boolean mIsTopOut;
+    public String mNotes;
 
     @Ignore
     private Context mContext;
@@ -50,14 +60,21 @@ public class Route {
     private RouteInfo mRouteInfo;
 
 
-    public Route(int placeID, String name) {
+    public Route(int placeID, String name, int diff, String type,
+                 int startHoldCount, boolean isSitStart, boolean isTopOut, String notes) {
         mPlaceID = placeID;
         mName = name;
+        mDiff = diff;
+        mType = type;
+        mStartHoldCount = startHoldCount;
+        mIsSitStart = isSitStart;
+        mIsTopOut = isTopOut;
+        mNotes = notes;
     }
 
 
     /**
-     * Initiation
+     * Initiation of the things that don't get stored to database.
      * @param context App's context.
      * @param transformationSystem TransformationSystem for TransformableNodes.
      * @param renderableHelper RenderableHelper to provide correct Renderables.

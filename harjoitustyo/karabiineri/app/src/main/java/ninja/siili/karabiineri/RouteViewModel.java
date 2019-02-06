@@ -19,4 +19,23 @@ public class RouteViewModel extends AndroidViewModel {
         super(application);
         mDataRepository = new DataRepository(application);
     }
+
+
+    /** Initiate with all Routes in one Place **/
+    public void init(int placeID) {
+        mDataRepository.init(placeID);
+        mAllRoutesLiveData = mDataRepository.getAllRoutesInPlaceLiveData();
+    }
+
+
+    /** Get a list of the LiveDataObjects of the Routes in the initiated Place **/
+    public LiveData<List<Route>> getAllRoutesLiveData() {
+        return mAllRoutesLiveData;
+    }
+
+
+    /** Insert a new Route **/
+    public void insertRoute(Route route) {
+        mDataRepository.insertRoute(route);
+    }
 }
