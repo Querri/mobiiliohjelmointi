@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#383838</color>
+    <color name="colorPrimaryDark">#383838</color>
+    <color name="colorAccent">#cbba29</color>
+    <color name="colorAccent2">#c6461f</color>
 
-    <!-- info card -->
+    <!-- Info card -->
     <color name="dark_grey">#202020</color>
     <color name="grey">@android:color/darker_gray</color>
     <color name="white">@android:color/white</color>
 
-    <!-- Colors for routes. -->
+    <!-- Colors for routes -->
     <color name="green">#46b749</color>
     <color name="yellow">#ffdd1a</color>
     <color name="orange">#f5831f</color>

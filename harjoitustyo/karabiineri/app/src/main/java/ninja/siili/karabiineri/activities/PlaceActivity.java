@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,9 @@ public class PlaceActivity extends AppCompatActivity {
         if (b != null) {
             int id = b.getInt("id");
 
+            ImageView imageView = findViewById(R.id.image);
+            imageView.setImageDrawable(getDrawable(R.drawable.kallio1));
+
             // Get the PlaceViewModel
             mPlaceViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
             mPlaceViewModel.init(id);
@@ -110,7 +114,7 @@ public class PlaceActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(@Nullable final Place place) {
                     if (place != null) {
-                        nameTextView.setText(place.getName());
+                        PlaceActivity.this.setTitle(place.getName());
                         descTextView.setText(place.getDesc());
                         accessTextView.setText(place.getAccess());
                     } else {
