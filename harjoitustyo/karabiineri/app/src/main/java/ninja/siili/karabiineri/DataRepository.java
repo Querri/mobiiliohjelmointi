@@ -34,7 +34,7 @@ public class DataRepository {
 
 
     /** Initiate with a Place with specific ID */
-    public void init(int placeId) {
+    public void init(String placeId) {
         mPlaceLiveData = mPlaceDao.getPlaceWithId(placeId);
         mAllRoutesInPlaceLiveData = mRouteDao.getRoutesInPlace(placeId);
     }

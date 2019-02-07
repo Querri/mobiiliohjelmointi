@@ -17,7 +17,7 @@ public interface RouteDao {
     LiveData<List<Route>> getAllRoutes();
 
     @Query(("SELECT * FROM route_table WHERE mPlaceID LIKE :placeid"))
-    LiveData<List<Route>> getRoutesInPlace(int placeid);
+    LiveData<List<Route>> getRoutesInPlace(String placeid);
 
     @Query(("SELECT * FROM route_table WHERE mID LIKE :id"))
     LiveData<Route> getRouteWithId(int id);

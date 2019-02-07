@@ -1,5 +1,6 @@
 package ninja.siili.karabiineri.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +26,12 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import ninja.siili.karabiineri.PlaceViewModel;
 import ninja.siili.karabiineri.R;
+import ninja.siili.karabiineri.RouteViewModel;
 import ninja.siili.karabiineri.utilities.RenderableHelper;
 import ninja.siili.karabiineri.Route;
+import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 
 public class ArActivity extends AppCompatActivity {
 
@@ -39,15 +44,15 @@ public class ArActivity extends AppCompatActivity {
     private GestureDetector gestureDetector;
 
     private Route mActiveRoute;
-    private ArrayList<Route> mRoutes;
     private boolean editMode = false;
     private TextView modeTextView;
 
     private View mInfoView;
-    private View mInfoViewFAB;
+    private View mToggleInfoViewFAB;
     private FloatingActionButton mChangeModeFAB;
 
-    private int placeID;
+    private String placeID;
+    private RouteViewModel mRouteViewModel;
 
     private boolean hasFinishedLoading = false;
 
@@ -58,23 +63,27 @@ public class ArActivity extends AppCompatActivity {
 
         mInfoView = findViewById(R.id.include);
         mInfoView.setVisibility(View.GONE);
-        mInfoViewFAB = findViewById(R.id.fab_info_view);
-        mInfoViewFAB.setVisibility(View.INVISIBLE);
+        mToggleInfoViewFAB = findViewById(R.id.fab_info_view);
+        mToggleInfoViewFAB.setVisibility(View.INVISIBLE);
         mChangeModeFAB = findViewById(R.id.fab_change_mode);
         modeTextView = findViewById(R.id.tv_mode);
 
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            placeID = b.getInt("id");
+            placeID = b.getString("id");
             setTitle("Paikan ID: " + placeID);
+
+            mRouteViewModel = ViewModelProviders.of(this).get(RouteViewModel.class);
+            mRouteViewModel.init(placeID);
         }
 
-        mRoutes = new ArrayList<>();
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         arFragment.getPlaneDiscoveryController().hide();
         arFragment.getPlaneDiscoveryController().setInstructionView(null);
         mScene = arFragment.getArSceneView().getScene();
+
+        setupRouteInfoEditView();
 
         // Build all the models.
         CompletableFuture<ModelRenderable> clipStageGreen =
@@ -181,7 +190,6 @@ public class ArActivity extends AppCompatActivity {
         if (frame != null) {
             if (mActiveRoute == null && editMode) {
                 if (tryPlaceNewRoute(tap, frame)) {
-                    selectRoute(mRoutes.get(mRoutes.size() - 1));
                     editingRoute(editMode);
                 } else {
                     Toast.makeText(this, "nope", Toast.LENGTH_SHORT).show();
@@ -220,7 +228,8 @@ public class ArActivity extends AppCompatActivity {
                             2, false, false, "");
                     newRoute.init(this, arFragment.getTransformationSystem(), mRenderableHelper);
                     newRoute.addClip(hit);
-                    mRoutes.add(newRoute);
+                    mRouteViewModel.insertRoute(newRoute);
+                    selectRoute(newRoute);
                     return true;
                 }
             }
@@ -279,10 +288,10 @@ public class ArActivity extends AppCompatActivity {
 
         // Show FAB for info view only when a route is in editing mode.
         if (startEdit) {
-            mInfoViewFAB.setVisibility(View.VISIBLE);
-            mActiveRoute.setupInfoView(mInfoView);
+            mToggleInfoViewFAB.setVisibility(View.VISIBLE);
+            setRouteInfoEditViewProperties();
         } else {
-            mInfoViewFAB.setVisibility(View.INVISIBLE);
+            mToggleInfoViewFAB.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -331,13 +340,40 @@ public class ArActivity extends AppCompatActivity {
     public void onClickToggleInfoView(View button) {
         if (mActiveRoute != null) {
             if (mInfoView.getVisibility() == View.GONE) {
-                mActiveRoute.updateInfoView(mInfoView);
                 mInfoView.setVisibility(View.VISIBLE);
             } else {
                 mInfoView.setVisibility(View.GONE);
-                mActiveRoute.updateRouteInfo(mInfoView);
             }
         }
+    }
+
+
+    /** Set correct properties to editinfoview */
+    private void setupRouteInfoEditView() {
+        SeekBar diffSeekBar = mInfoView.findViewById(R.id.diff_seekbar);
+        TextView diffTextView = mInfoView.findViewById(R.id.diff_number);
+
+        // listener for difficulty seekbar to change difficulty textview
+        diffSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Toast.makeText(ArActivity.this, "diff changed", Toast.LENGTH_SHORT).show();
+                diffTextView.setText(RouteInfoHelper.getDiffString(2));
+                diffTextView.setTextColor(RouteInfoHelper.getDiffColor(ArActivity.this, 2));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+
+    private void setRouteInfoEditViewProperties() {
+        SeekBar diffSeekBar = mInfoView.findViewById(R.id.diff_seekbar);
+        diffSeekBar.setProgress(30);
     }
 }
 

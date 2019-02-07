@@ -17,7 +17,7 @@ public interface PlaceDao {
     LiveData<List<Place>> getAllPlaces();
 
     @Query(("SELECT * FROM place_table WHERE mID LIKE :id"))
-    LiveData<Place> getPlaceWithId(int id);
+    LiveData<Place> getPlaceWithId(String id);
 
     @Query(("SELECT * FROM place_table WHERE mID LIKE :name"))
     LiveData<Place> getPlaceWithName(String name);

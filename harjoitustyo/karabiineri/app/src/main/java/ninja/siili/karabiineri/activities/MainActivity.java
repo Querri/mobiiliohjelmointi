@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(place.getLocation())
                                 .title(place.getName())
-                                .snippet("ID: " + Integer.toString(place.getId()))
+                                .snippet("ID: " + place.getId())
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
                                 .alpha(1));
                         marker.setTag(place.getId());
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements
                 LatLng markerPosition = marker.getPosition();
 
                 Intent intent = new Intent(MainActivity.this, PlaceEditActivity.class);
-                intent.putExtra("id", 56);
+                intent.putExtra("id", 56);  // FIXME wut
                 intent.putExtra("location", new double[] {markerPosition.latitude, markerPosition.longitude});
                 marker.remove();
                 startActivityForResult(intent, NEW_PLACE_ACTIVITY_REQUEST_CODE);
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements
             } else {
                 // marker of an existing place
                 Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
-                intent.putExtra("id", (int) marker.getTag());
+                intent.putExtra("id", (String) marker.getTag());
                 startActivity(intent);
             }
         } else {

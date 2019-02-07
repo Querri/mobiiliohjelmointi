@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ninja.siili.karabiineri.utilities.Converters;
 import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 
 /** Stores information about the route. */
@@ -172,7 +171,6 @@ public class RouteInfo {
 
         if (views != null && views.size() == 8) {
             ((TextView) views.get(0)).setText(mName);
-            //readJson(infoView);
             ((SeekBar) views.get(1)).setProgress(mDiff);
             ((RadioButton) views.get(2)).setChecked(mIsBoulder);
             ((RadioButton) views.get(3)).setChecked(mIsSport);

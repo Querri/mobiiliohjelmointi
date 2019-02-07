@@ -2,14 +2,18 @@ package ninja.siili.karabiineri;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.UUID;
 
 @Entity(tableName = "place_table")
 public class Place {
 
-    @PrimaryKey(autoGenerate = true)
-    public int mID;
+    @NonNull
+    @PrimaryKey
+    public String mID;
 
     public String mName;
     public String mDesc;
@@ -18,6 +22,7 @@ public class Place {
 
 
     public Place(String name, String desc, String access, LatLng location) {
+        mID = UUID.randomUUID().toString();
         mName = name;
         mDesc = desc;
         mAccess = access;
@@ -25,7 +30,7 @@ public class Place {
     }
 
 
-    public int getId() { return mID; }
+    public String getId() { return mID; }
     public String getName() { return mName; }
     public LatLng getLocation() { return mLocation; }
     public String getDesc() { return mDesc; }

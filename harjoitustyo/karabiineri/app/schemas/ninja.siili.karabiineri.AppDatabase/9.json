@@ -1,0 +1,137 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 9,
+    "identityHash": "907dc14813df1440d9883d1b7c643b62",
+    "entities": [
+      {
+        "tableName": "place_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mName` TEXT, `mDesc` TEXT, `mAccess` TEXT, `mLocation` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "mID",
+            "columnName": "mID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "mName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mDesc",
+            "columnName": "mDesc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAccess",
+            "columnName": "mAccess",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mLocation",
+            "columnName": "mLocation",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "route_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mID` TEXT NOT NULL, `mPlaceID` INTEGER NOT NULL, `mName` TEXT, `mDiff` INTEGER NOT NULL, `mType` TEXT, `mStartHoldCount` INTEGER NOT NULL, `mIsSitStart` INTEGER NOT NULL, `mIsTopOut` INTEGER NOT NULL, `mNotes` TEXT, PRIMARY KEY(`mID`), FOREIGN KEY(`mPlaceID`) REFERENCES `place_table`(`mID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "mID",
+            "columnName": "mID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mPlaceID",
+            "columnName": "mPlaceID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "mName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mDiff",
+            "columnName": "mDiff",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mType",
+            "columnName": "mType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mStartHoldCount",
+            "columnName": "mStartHoldCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mIsSitStart",
+            "columnName": "mIsSitStart",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mIsTopOut",
+            "columnName": "mIsTopOut",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mNotes",
+            "columnName": "mNotes",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "place_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "mPlaceID"
+            ],
+            "referencedColumns": [
+              "mID"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"907dc14813df1440d9883d1b7c643b62\")"
+    ]
+  }
+}

@@ -3,16 +3,20 @@ package ninja.siili.karabiineri;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.google.ar.core.HitResult;
 import com.google.ar.sceneform.ux.TransformationSystem;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ninja.siili.karabiineri.utilities.RenderableHelper;
+import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -24,14 +28,15 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 onDelete = CASCADE))
 public class Route {
 
-    @PrimaryKey(autoGenerate = true)
-    public int mID;
+    @NonNull
+    @PrimaryKey
+    public String mID;
 
     // FIXME
     // mPlaceID column references a foreign key but it is not part of an index.
     // This may trigger full table scans whenever parent table is modified so
     // you are highly advised to create an index that covers this column.
-    public int mPlaceID;
+    public String mPlaceID;
 
     public String mName;
     public int mDiff;
@@ -56,12 +61,13 @@ public class Route {
     @Ignore
     private int mSelectedClipPosition = 0;
 
+    public Route() {}
+
     @Ignore
-    private RouteInfo mRouteInfo;
+    public Route(String placeID, String name, int diff, String type, int startHoldCount,
+                 boolean isSitStart, boolean isTopOut, String notes) {
 
-
-    public Route(int placeID, String name, int diff, String type,
-                 int startHoldCount, boolean isSitStart, boolean isTopOut, String notes) {
+        mID = UUID.randomUUID().toString();
         mPlaceID = placeID;
         mName = name;
         mDiff = diff;
@@ -84,7 +90,6 @@ public class Route {
         mContext = context;
         mTransformationSystem = transformationSystem;
         mRenderableHelper = renderableHelper;
-        mRouteInfo = new RouteInfo(context, "0");  // FIXME it's static
     }
 
 
@@ -101,7 +106,7 @@ public class Route {
         }
 
         mClips.add(new Clip(mTransformationSystem, mRenderableHelper, hit,
-                mRouteInfo.getDifficultyColor(), previousClip));
+                RouteInfoHelper.getDiffColor(mContext, mDiff), previousClip));
     }
 
 
@@ -141,47 +146,10 @@ public class Route {
      */
     public void changeRouteColor() {
         for (Clip clip : mClips) {
-            clip.changeColor(mRouteInfo.getDifficultyColor());
+            clip.changeColor(RouteInfoHelper.getDiffColor(mContext, mDiff));
         }
     }
 
-
-    /**
-     * Pass infoView to RouteInfo for updating RouteInfo's values.
-     * @param infoView View.
-     */
-    public void updateRouteInfo(View infoView) {
-        if (mRouteInfo.updateAll(infoView)) {
-            changeRouteColor();
-            updateInfoCard();
-        }
-    }
-
-
-    /**
-     * Pass infoView to RouteInfo for setup.
-     * @param infoView View of the infoView.
-     */
-    public void setupInfoView(View infoView) {
-        mRouteInfo.setupInfoView(infoView);
-    }
-
-
-    /**
-     * Pass infoView to RouteInfo for updating..
-     * @param infoView View of the infoView.
-     */
-    public void updateInfoView(View infoView) {
-        mRouteInfo.updateInfoView(infoView);
-    }
-
-
-    /**
-     * Update the info card.
-     */
-    public void updateInfoCard() {
-        mRouteInfo.updateInfoCardView(mClips.get(0).getInfoCardView());
-    }
 
 
     /**

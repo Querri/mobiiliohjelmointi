@@ -35,7 +35,7 @@ public class PlaceActivity extends AppCompatActivity {
     private PlaceViewModel mPlaceViewModel;
     private RouteViewModel mRouteViewModel;
 
-    private int placeID;
+    private String placeID;
 
     private View.OnClickListener arButtonOnClickListener = new View.OnClickListener() {
         @Override
@@ -103,7 +103,7 @@ public class PlaceActivity extends AppCompatActivity {
         // get bundle from intent
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            placeID = b.getInt("id");
+            placeID = b.getString("id");
 
             ImageView imageView = findViewById(R.id.image);
             imageView.setImageDrawable(getDrawable(R.drawable.kallio1));
@@ -122,7 +122,7 @@ public class PlaceActivity extends AppCompatActivity {
                         accessTextView.setText(place.getAccess());
                     } else {
                         Toast.makeText(PlaceActivity.this,
-                                "null Place" + Integer.toString(placeID),
+                                "null Place" + placeID,
                                 Toast.LENGTH_SHORT).show();
                     }
                 }

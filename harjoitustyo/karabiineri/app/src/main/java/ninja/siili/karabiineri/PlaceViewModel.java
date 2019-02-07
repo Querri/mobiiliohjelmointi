@@ -29,7 +29,7 @@ public class PlaceViewModel extends AndroidViewModel {
 
 
     /** Initiate with a Place with specific ID */
-    public void init(int placeId) {
+    public void init(String placeId) {
         mDataRepository.init(placeId);
         mPlaceLiveData = mDataRepository.getPlaceLiveData();
     }

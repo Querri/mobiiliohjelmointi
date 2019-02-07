@@ -22,7 +22,7 @@ public class RouteViewModel extends AndroidViewModel {
 
 
     /** Initiate with all Routes in one Place **/
-    public void init(int placeID) {
+    public void init(String placeID) {
         mDataRepository.init(placeID);
         mAllRoutesLiveData = mDataRepository.getAllRoutesInPlaceLiveData();
     }
