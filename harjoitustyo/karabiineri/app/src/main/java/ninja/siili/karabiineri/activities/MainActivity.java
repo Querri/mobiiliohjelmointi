@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -25,6 +27,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -139,7 +143,9 @@ public class MainActivity extends AppCompatActivity implements
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(place.getLocation())
                                 .title(place.getName())
-                                .snippet("ID: " + Integer.toString(place.getId())));
+                                .snippet("ID: " + Integer.toString(place.getId()))
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
+                                .alpha(1));
                         marker.setTag(place.getId());
                     }
                 }
@@ -261,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements
         Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(mMap.getCameraPosition().target)
                 .title(getString(R.string.marker_text))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add))
+                .alpha(1)
                 .draggable(true));
         marker.setTag("edit");
     }
