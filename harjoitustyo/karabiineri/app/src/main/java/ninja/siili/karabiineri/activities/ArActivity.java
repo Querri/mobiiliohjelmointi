@@ -43,10 +43,11 @@ public class ArActivity extends AppCompatActivity {
     private boolean editMode = false;
     private TextView modeTextView;
 
-
     private View mInfoView;
     private View mInfoViewFAB;
     private FloatingActionButton mChangeModeFAB;
+
+    private int placeID;
 
     private boolean hasFinishedLoading = false;
 
@@ -60,6 +61,11 @@ public class ArActivity extends AppCompatActivity {
         mInfoViewFAB.setVisibility(View.INVISIBLE);
         mChangeModeFAB = findViewById(R.id.fab_change_mode);
         modeTextView = findViewById(R.id.tv_mode);
+
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            placeID = b.getInt("id");
+        }
 
         mRoutes = new ArrayList<>();
 
@@ -207,11 +213,12 @@ public class ArActivity extends AppCompatActivity {
             for (HitResult hit : frame.hitTest(tap)) {
                 Trackable trackable = hit.getTrackable();
                 if (trackable instanceof Point) {
-                    // FIXME, constructor arguments
-                    /*Route newRoute = new Route(0, "Hi I'm a route");
+                    // FIXME, static arguments
+                    Route newRoute = new Route(placeID, "", 0, "boulder",
+                            2, false, false, "");
                     newRoute.init(this, arFragment.getTransformationSystem(), mRenderableHelper);
                     newRoute.addClip(hit);
-                    mRoutes.add(newRoute);*/
+                    mRoutes.add(newRoute);
                     return true;
                 }
             }

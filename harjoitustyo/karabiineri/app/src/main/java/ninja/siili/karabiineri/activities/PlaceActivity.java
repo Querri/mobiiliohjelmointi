@@ -35,13 +35,16 @@ public class PlaceActivity extends AppCompatActivity {
     private PlaceViewModel mPlaceViewModel;
     private RouteViewModel mRouteViewModel;
 
+    private int placeID;
+
     private View.OnClickListener arButtonOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
             new RouteInfo(PlaceActivity.this, "0");
-            Intent intent = new Intent(PlaceActivity.this, ArActivity.class);
-            startActivity(intent);
+            Intent arIntent = new Intent(PlaceActivity.this, ArActivity.class);
+            arIntent.putExtra("placeID", placeID);
+            startActivity(arIntent);
         }
     };
 
@@ -100,14 +103,14 @@ public class PlaceActivity extends AppCompatActivity {
         // get bundle from intent
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            int id = b.getInt("id");
+            placeID = b.getInt("id");
 
             ImageView imageView = findViewById(R.id.image);
             imageView.setImageDrawable(getDrawable(R.drawable.kallio1));
 
             // Get the PlaceViewModel
             mPlaceViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
-            mPlaceViewModel.init(id);
+            mPlaceViewModel.init(placeID);
 
             // Observe PlaceLiveData and get it's info to populate fields.
             mPlaceViewModel.getPlaceLiveData().observe(this, new Observer<Place>() {
@@ -118,7 +121,9 @@ public class PlaceActivity extends AppCompatActivity {
                         descTextView.setText(place.getDesc());
                         accessTextView.setText(place.getAccess());
                     } else {
-                        Toast.makeText(PlaceActivity.this, "null Place" + Integer.toString(id), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PlaceActivity.this,
+                                "null Place" + Integer.toString(placeID),
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -126,7 +131,7 @@ public class PlaceActivity extends AppCompatActivity {
 
             // Get the RouteViewModel
             mRouteViewModel = ViewModelProviders.of(this).get(RouteViewModel.class);
-            mRouteViewModel.init(id);
+            mRouteViewModel.init(placeID);
             //mRouteViewModel.insertRoute(new Route(id, "hi route", 1, "sport", 2, false, false, ""));
 
             // Observe LiveData of all Routes in this Place, and use it to populate fields.
