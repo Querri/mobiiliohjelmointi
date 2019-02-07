@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.explicitintent;
+package ninja.siili.lesson4a;
 
 import android.content.Context;
 import android.content.Intent;
@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
          * do things like set the onClickListener which determines what happens when the button
          * is clicked.
          */
-        mDoSomethingCoolButton = (Button) findViewById(R.id.b_do_something_cool);
-        mNameEntry = (EditText) findViewById(R.id.et_text_entry);
+        mDoSomethingCoolButton = findViewById(R.id.b_do_something_cool);
+        mNameEntry = findViewById(R.id.et_text_entry);
 
         /* Setting an OnClickListener allows us to do something when this button is clicked. */
         mDoSomethingCoolButton.setOnClickListener(new OnClickListener() {

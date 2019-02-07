@@ -4,10 +4,6 @@
         android:id="@+id/drawer_top"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_nearest_place"
-            android:title="@string/nearest_place"
-            android:icon="@drawable/ic_location"/>
-        <item
             android:id="@+id/nav_add_place"
             android:title="@string/add_place"
             android:icon="@drawable/ic_add"/>

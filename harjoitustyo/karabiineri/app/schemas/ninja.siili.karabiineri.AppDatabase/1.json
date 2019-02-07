@@ -1,0 +1,57 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "87f861b24c7913303e78e628f3a361aa",
+    "entities": [
+      {
+        "tableName": "place_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mName` TEXT, `mDesc` TEXT, `mAccess` TEXT, `mLocation` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "mID",
+            "columnName": "mID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "mName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mDesc",
+            "columnName": "mDesc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAccess",
+            "columnName": "mAccess",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mLocation",
+            "columnName": "mLocation",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"87f861b24c7913303e78e628f3a361aa\")"
+    ]
+  }
+}

@@ -18,24 +18,17 @@
         android:theme="@style/Theme.AppCompat">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCbyTVVSbVFnkD4LOgoiDZhiXsfoF7QwAI" />
+            android:value="AIzaSyCtoZ-tl91ksc4CdUKZniST_n-khhZnyS8" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".PlaceActivity" />
-        <activity android:name=".PlaceEditActivity" />
-        <activity
-            android:name=".ArActivity"
-            android:configChanges="orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="locked"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+        <activity android:name=".activities.PlaceActivity" />
+        <activity android:name=".activities.PlaceEditActivity" />
+        <activity android:name=".activities.ArActivity" />
 
         <meta-data
             android:name="com.google.ar.core"
