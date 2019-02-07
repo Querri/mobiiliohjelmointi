@@ -51,4 +51,7 @@ public class PlaceViewModel extends AndroidViewModel {
     public void insert(Place place) {
         mDataRepository.insertPlace(place);
     }
+
+
+    public void deleteAllPlaces() { mDataRepository.deleteAllPlaces(); }
 }

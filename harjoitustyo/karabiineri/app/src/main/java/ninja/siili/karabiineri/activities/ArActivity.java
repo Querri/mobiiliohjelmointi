@@ -55,6 +55,7 @@ public class ArActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
+
         mInfoView = findViewById(R.id.include);
         mInfoView.setVisibility(View.GONE);
         mInfoViewFAB = findViewById(R.id.fab_info_view);
@@ -65,6 +66,7 @@ public class ArActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if (b != null) {
             placeID = b.getInt("id");
+            setTitle("Paikan ID: " + placeID);
         }
 
         mRoutes = new ArrayList<>();
@@ -292,10 +294,10 @@ public class ArActivity extends AppCompatActivity {
         if (mActiveRoute == null) {
             if (editMode) {
                 modeTextView.setText(this.getString(R.string.add_route));
-                mChangeModeFAB.setImageResource(R.drawable.ic_save);  // FIXME clear
+                mChangeModeFAB.setImageResource(R.drawable.ic_add);  // FIXME clear
             } else {
                 modeTextView.setText("");
-                mChangeModeFAB.setImageResource(R.drawable.ic_save);  // FIXME add
+                mChangeModeFAB.setImageResource(R.drawable.ic_add);  // FIXME add
             }
         } else {
             if (editMode) {
@@ -303,7 +305,7 @@ public class ArActivity extends AppCompatActivity {
                 mChangeModeFAB.setImageResource(R.drawable.ic_save);
             } else {
                 modeTextView.setText(this.getString(R.string.route_active));
-                mChangeModeFAB.setImageResource(R.drawable.ic_save);  // FIXME edit
+                mChangeModeFAB.setImageResource(R.drawable.ic_settings);  // FIXME edit
             }
         }
     }

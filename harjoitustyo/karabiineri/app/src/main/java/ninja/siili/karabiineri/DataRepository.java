@@ -105,4 +105,9 @@ public class DataRepository {
             return null;
         }
     }
+
+
+    public void deleteAllPlaces() {
+        mPlaceDao.deleteAll();
+    }
 }
