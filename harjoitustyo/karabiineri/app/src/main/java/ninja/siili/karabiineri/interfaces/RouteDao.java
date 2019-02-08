@@ -20,7 +20,7 @@ public interface RouteDao {
     LiveData<List<Route>> getRoutesInPlace(String placeid);
 
     @Query(("SELECT * FROM route_table WHERE mID LIKE :id"))
-    LiveData<Route> getRouteWithId(int id);
+    LiveData<Route> getRouteWithId(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Route route);

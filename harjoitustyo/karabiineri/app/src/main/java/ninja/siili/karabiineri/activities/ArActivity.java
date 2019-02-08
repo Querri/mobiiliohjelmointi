@@ -1,17 +1,27 @@
 package ninja.siili.karabiineri.activities;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Point;
@@ -23,9 +33,11 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import ninja.siili.karabiineri.Place;
 import ninja.siili.karabiineri.PlaceViewModel;
 import ninja.siili.karabiineri.R;
 import ninja.siili.karabiineri.RouteViewModel;
@@ -223,9 +235,8 @@ public class ArActivity extends AppCompatActivity {
             for (HitResult hit : frame.hitTest(tap)) {
                 Trackable trackable = hit.getTrackable();
                 if (trackable instanceof Point) {
-                    // FIXME, static arguments
-                    Route newRoute = new Route(placeID, "", 0, "boulder",
-                            2, false, false, "");
+                    // Make a new Route with default arguments
+                    Route newRoute = new Route(placeID);
                     newRoute.init(this, arFragment.getTransformationSystem(), mRenderableHelper);
                     newRoute.addClip(hit);
                     mRouteViewModel.insertRoute(newRoute);
@@ -372,8 +383,53 @@ public class ArActivity extends AppCompatActivity {
 
 
     private void setRouteInfoEditViewProperties() {
+        EditText nameEditText = mInfoView.findViewById(R.id.name);
         SeekBar diffSeekBar = mInfoView.findViewById(R.id.diff_seekbar);
-        diffSeekBar.setProgress(30);
+        TextView diffTextView = mInfoView.findViewById(R.id.diff_number);
+        RadioButton boulderRadioButton = mInfoView.findViewById(R.id.boulder);
+        RadioButton sportRadioButton = mInfoView.findViewById(R.id.sport);
+        RadioButton tradRadioButton = mInfoView.findViewById(R.id.trad);
+        CheckBox sitstartCheckBox = mInfoView.findViewById(R.id.sitstart);
+        CheckBox topoutCheckBox = mInfoView.findViewById(R.id.topout);
+        EditText notesEditText = mInfoView.findViewById(R.id.notes);
+
+        if (mActiveRoute != null) { 
+            mRouteViewModel.init(placeID, mActiveRoute.mID);
+        } else {
+            Toast.makeText(this, "activeroute null", Toast.LENGTH_SHORT).show();
+        }
+
+        if (mRouteViewModel != null) {
+            if (mRouteViewModel.getRouteLiveData() != null) {
+                mRouteViewModel.getRouteLiveData().observe(this, new Observer<Route>() {
+                    @Override
+                    public void onChanged(@Nullable Route route) {
+                        if (route != null) {
+                            nameEditText.setText(route.mName);
+                            diffSeekBar.setProgress(route.mDiff);
+                            diffTextView.setText(RouteInfoHelper.getDiffString(route.mDiff));
+                            sitstartCheckBox.setChecked(route.mIsSitStart);
+                            topoutCheckBox.setChecked(route.mIsTopOut);
+                            notesEditText.setText(route.mNotes);
+
+                            String type = route.mType;
+                            switch(type) {
+                                case "boulder": boulderRadioButton.setChecked(true);
+                                                break;
+                                case "sport":   sportRadioButton.setChecked(true);
+                                                break;
+                                case "trad":    tradRadioButton.setChecked(true);
+                                                break;
+                            }
+                        }
+                    }
+                });
+            } else {
+                Toast.makeText(this, "null routeLiveData", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "null routeViewModel", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

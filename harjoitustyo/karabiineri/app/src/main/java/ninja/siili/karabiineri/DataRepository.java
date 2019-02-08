@@ -19,6 +19,7 @@ public class DataRepository {
 
     private LiveData<List<Route>> mAllRoutesLiveData;
     private LiveData<List<Route>> mAllRoutesInPlaceLiveData;
+    private LiveData<Route> mRouteInPlace;
 
 
     DataRepository(Application application) {
@@ -40,6 +41,12 @@ public class DataRepository {
     }
 
 
+    public void init(String placeID, String routeID) {
+        mPlaceLiveData = mPlaceDao.getPlaceWithId(placeID);
+        mRouteInPlace = mRouteDao.getRouteWithId(routeID);
+    }
+
+
     /** Get a list of the LiveDataObjects of the initiated Places */
     LiveData<List<Place>> getAllPlacesLiveData() {
         return mAllPlacesLiveData;
@@ -55,6 +62,9 @@ public class DataRepository {
     LiveData<List<Route>> getAllRoutesInPlaceLiveData() {
         return mAllRoutesInPlaceLiveData;
     }
+
+
+    LiveData<Route> getRouteInPlaceLiveData() { return mRouteInPlace; }
 
 
 

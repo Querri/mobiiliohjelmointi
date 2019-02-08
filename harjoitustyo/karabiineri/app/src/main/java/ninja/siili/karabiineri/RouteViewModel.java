@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -28,10 +29,19 @@ public class RouteViewModel extends AndroidViewModel {
     }
 
 
+    public void init(String placeID, String routeID) {
+        mDataRepository.init(placeID, routeID);
+        mRouteLiveData = mDataRepository.getRouteInPlaceLiveData();
+    }
+
+
     /** Get a list of the LiveDataObjects of the Routes in the initiated Place **/
     public LiveData<List<Route>> getAllRoutesLiveData() {
         return mAllRoutesLiveData;
     }
+
+
+    public LiveData<Route> getRouteLiveData() { return mRouteLiveData; }
 
 
     /** Insert a new Route **/

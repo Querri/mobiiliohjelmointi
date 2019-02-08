@@ -64,18 +64,17 @@ public class Route {
     public Route() {}
 
     @Ignore
-    public Route(String placeID, String name, int diff, String type, int startHoldCount,
-                 boolean isSitStart, boolean isTopOut, String notes) {
+    public Route(String placeID) {
 
         mID = UUID.randomUUID().toString();
         mPlaceID = placeID;
-        mName = name;
-        mDiff = diff;
-        mType = type;
-        mStartHoldCount = startHoldCount;
-        mIsSitStart = isSitStart;
-        mIsTopOut = isTopOut;
-        mNotes = notes;
+        mName = "";
+        mDiff = 1;
+        mType = "boulder";
+        mStartHoldCount = 2;
+        mIsSitStart = false;
+        mIsTopOut = false;
+        mNotes = "";
     }
 
 
