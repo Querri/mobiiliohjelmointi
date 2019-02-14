@@ -32,8 +32,6 @@ import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 public class PlaceActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    private PlaceViewModel mPlaceViewModel;
-    private RouteViewModel mRouteViewModel;
 
     private String placeID;
 
@@ -93,10 +91,11 @@ public class PlaceActivity extends AppCompatActivity {
                 });
 
 
-        TextView nameTextView = findViewById(R.id.tv_name);
         TextView routeTypeTextView = findViewById(R.id.tv_route_types);
         TextView routeDiffStartTextView = findViewById(R.id.tv_route_diff_start);
+        TextView routeDiffMidTextView = findViewById(R.id.tv_route_diff_between);
         TextView routeDiffEndTextView = findViewById(R.id.tv_route_diff_end);
+        TextView routeCountTextView = findViewById(R.id.tv_route_count);
         TextView descTextView = findViewById(R.id.tv_desc);
         TextView accessTextView = findViewById(R.id.tv_access);
 
@@ -109,11 +108,11 @@ public class PlaceActivity extends AppCompatActivity {
             imageView.setImageDrawable(getDrawable(R.drawable.kallio1));
 
             // Get the PlaceViewModel
-            mPlaceViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
-            mPlaceViewModel.init(placeID);
+            PlaceViewModel placeViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
+            placeViewModel.init(placeID);
 
             // Observe PlaceLiveData and get it's info to populate fields.
-            mPlaceViewModel.getPlaceLiveData().observe(this, new Observer<Place>() {
+            placeViewModel.getPlaceLiveData().observe(this, new Observer<Place>() {
                 @Override
                 public void onChanged(@Nullable final Place place) {
                     if (place != null) {
@@ -130,39 +129,46 @@ public class PlaceActivity extends AppCompatActivity {
 
 
             // Get the RouteViewModel
-            mRouteViewModel = ViewModelProviders.of(this).get(RouteViewModel.class);
-            mRouteViewModel.init(placeID);
+            RouteViewModel routeViewModel = ViewModelProviders.of(this).get(RouteViewModel.class);
+            routeViewModel.init(placeID);
             //mRouteViewModel.insertRoute(new Route(id, "hi route", 1, "sport", 2, false, false, ""));
 
             // Observe LiveData of all Routes in this Place, and use it to populate fields.
-            mRouteViewModel.getAllRoutesLiveData().observe(this, new Observer<List<Route>>() {
+            routeViewModel.getAllRoutesLiveData().observe(this, new Observer<List<Route>>() {
                 @Override
                 public void onChanged(@Nullable List<Route> routes) {
                     if (routes != null) {
                         List<String> routeNames = new ArrayList<>();
                         List<String> routeTypes = new ArrayList<>();
-                        int minDiff = 100;
-                        int maxDiff = 0;
 
-                        for (Route route : routes) {
-                            routeNames.add(route.mName);
-                            if (!routeTypes.contains(route.mType)) routeTypes.add(route.mType);
-                            if (route.mDiff < minDiff) minDiff = route.mDiff;
-                            if (route.mDiff > maxDiff) maxDiff = route.mDiff;
+                        routeCountTextView.setText(Integer.toString(routes.size()));
+
+                        if (routes.size() > 0) {
+                            int minDiff = 100;
+                            int maxDiff = 0;
+
+                            for (Route route : routes) {
+                                routeNames.add(route.mName);
+                                if (!routeTypes.contains(route.mType)) routeTypes.add(route.mType);
+                                if (route.mDiff < minDiff) minDiff = route.mDiff;
+                                if (route.mDiff > maxDiff) maxDiff = route.mDiff;
+                            }
+
+                            StringBuilder typeBuilder = new StringBuilder();
+                            for (String type : routeTypes) {
+                                typeBuilder.append(type);
+                            }
+                            routeTypeTextView.setText(typeBuilder.toString());
+
+
+                            routeDiffStartTextView.setText(RouteInfoHelper.getDiffString(minDiff));
+                            routeDiffStartTextView.setTextColor(RouteInfoHelper.getDiffColor(
+                                    PlaceActivity.this, minDiff));
+                            routeDiffMidTextView.setVisibility(View.VISIBLE);
+                            routeDiffEndTextView.setText(RouteInfoHelper.getDiffString(maxDiff));
+                            routeDiffEndTextView.setTextColor(RouteInfoHelper.getDiffColor(
+                                    PlaceActivity.this, maxDiff));
                         }
-
-                        StringBuilder typeBuilder = new StringBuilder();
-                        for (String type : routeTypes) {
-                            typeBuilder.append(type);
-                        }
-                        routeTypeTextView.setText(typeBuilder.toString());
-
-                        routeDiffStartTextView.setText(RouteInfoHelper.getDiffString(minDiff));
-                        routeDiffStartTextView.setTextColor(RouteInfoHelper.getDiffColor(
-                                PlaceActivity.this, minDiff));
-                        routeDiffEndTextView.setText(RouteInfoHelper.getDiffString(maxDiff));
-                        routeDiffEndTextView.setTextColor(RouteInfoHelper.getDiffColor(
-                                PlaceActivity.this, maxDiff));
                     }
                 }
             });

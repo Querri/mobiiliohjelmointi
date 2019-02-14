@@ -12,6 +12,7 @@
     <string name="routes_diff">REITTIEN TASO</string>
     <string name="routes_count">REITTIEN MÄÄRÄ</string>
     <string name="route_types">REITTITYYPIT</string>
+    <string name="route_count">REITTIEN MÄÄRÄ</string>
     <string name="desc">KUVAUS</string>
     <string name="access">PÄÄSY PAIKKAAN</string>
     <string name="ar">AR</string>
