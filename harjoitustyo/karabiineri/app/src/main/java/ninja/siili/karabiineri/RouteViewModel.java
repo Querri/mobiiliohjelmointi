@@ -44,6 +44,12 @@ public class RouteViewModel extends AndroidViewModel {
     public LiveData<Route> getRouteLiveData() { return mRouteLiveData; }
 
 
+    public void updateRoute(String id, String name, int diff, String type,
+                            boolean isSitStart, boolean isTopOut, String notes) {
+        mDataRepository.updateRoute(id, name, diff, type, isSitStart, isTopOut, notes);
+    }
+
+
     /** Insert a new Route **/
     public void insertRoute(Route route) {
         mDataRepository.insertRoute(route);

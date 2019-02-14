@@ -156,6 +156,7 @@ public class PlaceActivity extends AppCompatActivity {
 
                             StringBuilder typeBuilder = new StringBuilder();
                             for (String type : routeTypes) {
+                                typeBuilder.append(" ");
                                 typeBuilder.append(type);
                             }
                             routeTypeTextView.setText(typeBuilder.toString());

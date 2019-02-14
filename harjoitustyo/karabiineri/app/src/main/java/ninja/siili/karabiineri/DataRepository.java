@@ -67,6 +67,11 @@ public class DataRepository {
     LiveData<Route> getRouteInPlaceLiveData() { return mRouteInPlace; }
 
 
+    void updateRoute(String id, String name, int diff, String type,
+                     boolean isSitStart, boolean isTopOut, String notes) {
+        new updateRouteAsyncTask(mRouteDao).execute(id, name, diff, type, isSitStart, isTopOut, notes);
+    }
+
 
 
     // TODO combine
@@ -112,6 +117,21 @@ public class DataRepository {
         @Override
         protected Void doInBackground(final Route... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+
+    public static class updateRouteAsyncTask extends AsyncTask<Object, Void, Void> {
+        private RouteDao mAsyncTaskDao;
+
+        updateRouteAsyncTask(RouteDao dao) { mAsyncTaskDao = dao; }
+
+
+        @Override
+        protected Void doInBackground(final Object... params) {
+            mAsyncTaskDao.update((String) params[0], (String) params[1], (int) params[2],
+                    (String) params[3], (boolean) params[4], (boolean) params[5], (String) params[6]);
             return null;
         }
     }

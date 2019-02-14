@@ -2,6 +2,7 @@ package ninja.siili.karabiineri.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -27,9 +29,13 @@ import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import ninja.siili.karabiineri.Place;
+import ninja.siili.karabiineri.PlaceViewModel;
 import ninja.siili.karabiineri.R;
 import ninja.siili.karabiineri.RouteViewModel;
 import ninja.siili.karabiineri.utilities.RenderableHelper;
@@ -73,8 +79,19 @@ public class ArActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            placeID = b.getString("id");
-            setTitle("Paikan ID: " + placeID);
+            placeID = b.getString("placeID");
+            PlaceViewModel placeViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
+            placeViewModel.init(placeID);
+
+            // change the view title to place name
+            placeViewModel.getPlaceLiveData().observe(this, new Observer<Place>() {
+                @Override
+                public void onChanged(@Nullable final Place place) {
+                    if (place != null) {
+                        ArActivity.this.setTitle(place.getName());
+                    }
+                }
+            });
 
             mRouteViewModel = ViewModelProviders.of(this).get(RouteViewModel.class);
             mRouteViewModel.init(placeID);
@@ -226,7 +243,6 @@ public class ArActivity extends AppCompatActivity {
             for (HitResult hit : frame.hitTest(tap)) {
                 Trackable trackable = hit.getTrackable();
                 if (trackable instanceof Point) {
-                    // Make a new Route with default arguments
                     Route newRoute = new Route(placeID);
                     newRoute.init(this, arFragment.getTransformationSystem(), mRenderableHelper);
                     newRoute.addClip(hit);
@@ -291,16 +307,14 @@ public class ArActivity extends AppCompatActivity {
         // Show FAB for info view only when a route is in editing mode.
         if (startEdit) {
             mToggleInfoViewFAB.setVisibility(View.VISIBLE);
-            setRouteInfoEditViewProperties();
+            setRouteInfoEditViewFields();
         } else {
             mToggleInfoViewFAB.setVisibility(View.INVISIBLE);
         }
     }
 
 
-    /**
-     * Update the text informing what mode is on.
-     */
+    /** Update the text informing what mode is on. */
     private void updateModeText() {
         if (mActiveRoute == null) {
             if (editMode) {
@@ -350,18 +364,26 @@ public class ArActivity extends AppCompatActivity {
     }
 
 
-    /** Set correct properties to editinfoview */
+    /** Setup RouteInfoEditView's listeners */
     private void setupRouteInfoEditView() {
         SeekBar diffSeekBar = mInfoView.findViewById(R.id.diff_seekbar);
         TextView diffTextView = mInfoView.findViewById(R.id.diff_number);
+        Button saveButton = mInfoView.findViewById(R.id.bt_save);
+
+        EditText nameEditText = mInfoView.findViewById(R.id.name);
+        RadioButton boulderRadioButton = mInfoView.findViewById(R.id.boulder);
+        RadioButton sportRadioButton = mInfoView.findViewById(R.id.sport);
+        RadioButton tradRadioButton = mInfoView.findViewById(R.id.trad);
+        CheckBox sitstartCheckBox = mInfoView.findViewById(R.id.sitstart);
+        CheckBox topoutCheckBox = mInfoView.findViewById(R.id.topout);
+        EditText notesEditText = mInfoView.findViewById(R.id.notes);
 
         // listener for difficulty seekbar to change difficulty textview
         diffSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Toast.makeText(ArActivity.this, "diff changed", Toast.LENGTH_SHORT).show();
-                diffTextView.setText(RouteInfoHelper.getDiffString(2));
-                diffTextView.setTextColor(RouteInfoHelper.getDiffColor(ArActivity.this, 2));
+                diffTextView.setText(RouteInfoHelper.getDiffString(progress));
+                diffTextView.setTextColor(RouteInfoHelper.getDiffColor(ArActivity.this, progress));
             }
 
             @Override
@@ -370,10 +392,30 @@ public class ArActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        saveButton.setOnClickListener( new View.OnClickListener() {
+            public void onClick(View v) {
+
+                String type = "";
+                if (boulderRadioButton.isChecked()) type = "boulder";
+                else if (sportRadioButton.isChecked()) type = "sport";
+                else if (tradRadioButton.isChecked()) type = "trad";
+
+                mRouteViewModel.updateRoute(mActiveRoute.mID,
+                        nameEditText.getText().toString(),
+                        diffSeekBar.getProgress(),
+                        type,
+                        sitstartCheckBox.isChecked(),
+                        topoutCheckBox.isChecked(),
+                        notesEditText.getText().toString()
+                );
+            }
+        });
     }
 
 
-    private void setRouteInfoEditViewProperties() {
+    /** Set the fields in the RouteInfoEditView to match the current properties of the active route */
+    private void setRouteInfoEditViewFields() {
         EditText nameEditText = mInfoView.findViewById(R.id.name);
         SeekBar diffSeekBar = mInfoView.findViewById(R.id.diff_seekbar);
         TextView diffTextView = mInfoView.findViewById(R.id.diff_number);
