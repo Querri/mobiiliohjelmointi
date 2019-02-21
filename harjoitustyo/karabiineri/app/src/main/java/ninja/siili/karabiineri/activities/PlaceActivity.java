@@ -138,7 +138,6 @@ public class PlaceActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(@Nullable List<Route> routes) {
                     if (routes != null) {
-                        List<String> routeNames = new ArrayList<>();
                         List<String> routeTypes = new ArrayList<>();
 
                         routeCountTextView.setText(Integer.toString(routes.size()));
@@ -148,24 +147,37 @@ public class PlaceActivity extends AppCompatActivity {
                             int maxDiff = 0;
 
                             for (Route route : routes) {
-                                routeNames.add(route.mName);
-                                if (!routeTypes.contains(route.mType)) routeTypes.add(route.mType);
+                                if (routeTypes.size() <= 3 && !routeTypes.contains(route.mType)) routeTypes.add(route.mType);
                                 if (route.mDiff < minDiff) minDiff = route.mDiff;
                                 if (route.mDiff > maxDiff) maxDiff = route.mDiff;
                             }
 
+                            // Make a nice, ordered string out of the route types
+                            List<String> orderedRouteTypes = new ArrayList<>();
+                            if (routeTypes.contains("boulder")) orderedRouteTypes.add("boulder");
+                            if (routeTypes.contains("sport")) orderedRouteTypes.add("sport");
+                            if (routeTypes.contains("trad")) orderedRouteTypes.add("trad");
+
                             StringBuilder typeBuilder = new StringBuilder();
-                            for (String type : routeTypes) {
-                                typeBuilder.append(" ");
+                            for (String type : orderedRouteTypes) {
+                                if (orderedRouteTypes.indexOf(type) != 0) {
+                                    if (orderedRouteTypes.size() == 3 && orderedRouteTypes.indexOf(type) == 1) {
+                                        typeBuilder.append(", ");
+                                    } else {
+                                    typeBuilder.append(" ja ");
+                                    }
+                                }
                                 typeBuilder.append(type);
                             }
                             routeTypeTextView.setText(typeBuilder.toString());
 
-
-                            routeDiffStartTextView.setText(RouteInfoHelper.getDiffString(minDiff));
-                            routeDiffStartTextView.setTextColor(RouteInfoHelper.getDiffColor(
-                                    PlaceActivity.this, minDiff));
-                            routeDiffMidTextView.setVisibility(View.VISIBLE);
+                            // Display both ends only if they differ
+                            if (minDiff != maxDiff) {
+                                routeDiffStartTextView.setText(RouteInfoHelper.getDiffString(minDiff));
+                                routeDiffStartTextView.setTextColor(RouteInfoHelper.getDiffColor(
+                                        PlaceActivity.this, minDiff));
+                                routeDiffMidTextView.setVisibility(View.VISIBLE);
+                            }
                             routeDiffEndTextView.setText(RouteInfoHelper.getDiffString(maxDiff));
                             routeDiffEndTextView.setTextColor(RouteInfoHelper.getDiffColor(
                                     PlaceActivity.this, maxDiff));
