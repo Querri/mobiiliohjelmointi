@@ -2,7 +2,6 @@ package ninja.siili.karabiineri.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,8 +28,6 @@ import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -152,7 +149,7 @@ public class ArActivity extends AppCompatActivity {
 
                     return null;
                 });
-        
+
 
         // Update listener for moving lines.
         arFragment.getArSceneView().getScene().setOnUpdateListener(
@@ -191,7 +188,7 @@ public class ArActivity extends AppCompatActivity {
                     }
                 });
 
-        
+
         // Touch listener
         arFragment.getArSceneView().getScene().setOnTouchListener(
                 (HitTestResult hitTestResult, MotionEvent event) -> {
@@ -230,6 +227,18 @@ public class ArActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         // TODO disable fullscreen
+        /*super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        }*/
+    }
+
+
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
 
@@ -244,7 +253,7 @@ public class ArActivity extends AppCompatActivity {
                 Trackable trackable = hit.getTrackable();
                 if (trackable instanceof Point) {
                     Route newRoute = new Route(placeID);
-                    newRoute.init(this, arFragment.getTransformationSystem(), mRenderableHelper);
+                    newRoute.init(ArActivity.this, arFragment.getTransformationSystem(), mRenderableHelper);
                     newRoute.addClip(hit);
                     mRouteViewModel.insertRoute(newRoute);
                     selectRoute(newRoute);
@@ -401,6 +410,7 @@ public class ArActivity extends AppCompatActivity {
                 else if (sportRadioButton.isChecked()) type = "sport";
                 else if (tradRadioButton.isChecked()) type = "trad";
 
+                // Update database info
                 mRouteViewModel.updateRoute(mActiveRoute.mID,
                         nameEditText.getText().toString(),
                         diffSeekBar.getProgress(),
@@ -409,6 +419,21 @@ public class ArActivity extends AppCompatActivity {
                         topoutCheckBox.isChecked(),
                         notesEditText.getText().toString()
                 );
+
+                // Update visible info
+                mRouteViewModel.getRouteLiveData().observe(ArActivity.this, new Observer<Route>() {
+                    @Override
+                    public void onChanged(@Nullable final Route route) {
+                        if (route != null) {
+                            route.changeRouteColor(ArActivity.this);
+                            //route.updateRouteInfoCard();
+                        } else {
+                            Toast.makeText(ArActivity.this,
+                                    "null Route on Save",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
     }
@@ -426,7 +451,7 @@ public class ArActivity extends AppCompatActivity {
         CheckBox topoutCheckBox = mInfoView.findViewById(R.id.topout);
         EditText notesEditText = mInfoView.findViewById(R.id.notes);
 
-        if (mActiveRoute != null) { 
+        if (mActiveRoute != null) {
             mRouteViewModel.init(placeID, mActiveRoute.mID);
         } else {
             Toast.makeText(this, "activeroute null", Toast.LENGTH_SHORT).show();

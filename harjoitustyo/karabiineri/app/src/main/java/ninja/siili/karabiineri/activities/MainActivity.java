@@ -6,8 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -27,18 +25,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import ninja.siili.karabiineri.Place;
 import ninja.siili.karabiineri.R;
 import ninja.siili.karabiineri.PlaceViewModel;
+import ninja.siili.karabiineri.utilities.MapMarkerInfo;
 import ninja.siili.karabiineri.utilities.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity implements
@@ -140,10 +139,19 @@ public class MainActivity extends AppCompatActivity implements
             public void onChanged(@Nullable List<Place> places) {
                 if (places != null) {
                     for (Place place : places) {
+
+                        MapMarkerInfo markerInfo = new MapMarkerInfo();
+                        markerInfo.setTitle(place.getName());
+                        markerInfo.setDesc(place.getDesc());
+                        markerInfo.setImage(R.drawable.kallio1);
+                        // TODO get from place: markerInfo.setImage(place.getImage());
+
+                        Gson gson = new Gson();
+                        String markerInfoString = gson.toJson(markerInfo);
+
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(place.getLocation())
-                                .title(place.getName())
-                                .snippet("ID: " + place.getId())
+                                .snippet(markerInfoString)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
                                 .alpha(1));
                         marker.setTag(place.getId());
@@ -162,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnInfoWindowClickListener(this);
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
         enableMyLocation();
         updatePlaceMarkers();

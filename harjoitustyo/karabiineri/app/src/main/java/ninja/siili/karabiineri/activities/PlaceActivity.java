@@ -39,7 +39,6 @@ public class PlaceActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            new RouteInfo(PlaceActivity.this, "0");
             Intent arIntent = new Intent(PlaceActivity.this, ArActivity.class);
             arIntent.putExtra("placeID", placeID);
             startActivity(arIntent);
@@ -164,7 +163,7 @@ public class PlaceActivity extends AppCompatActivity {
                                     if (orderedRouteTypes.size() == 3 && orderedRouteTypes.indexOf(type) == 1) {
                                         typeBuilder.append(", ");
                                     } else {
-                                    typeBuilder.append(" ja ");
+                                        typeBuilder.append(" ja ");
                                     }
                                 }
                                 typeBuilder.append(type);

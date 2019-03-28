@@ -15,7 +15,7 @@ import ninja.siili.karabiineri.utilities.RouteInfoHelper;
 /** Stores information about the route. */
 public class RouteInfo {
 
-    private Context mContext;
+    /*private Context mContext;
     private String mID;
 
     private String mName;
@@ -30,10 +30,10 @@ public class RouteInfo {
     private String mNotes;
 
 
-    /**
+    /*
      * Constructor for RouteInfo, sets default values.
      * @param context Context of the app
-     */
+     *
     public RouteInfo(Context context, String id) {
         mContext = context;
 
@@ -51,6 +51,7 @@ public class RouteInfo {
     }
 
 
+    /*
     private String getName() {
         if (mName.equals("")) return "Nameless Route";
         else return mName;
@@ -58,30 +59,15 @@ public class RouteInfo {
 
 
 
-    /** Set and get difficulty color based on difficulty */
-    private void setDifficulty(int diff) {
-        mDiff = diff;
-        if (mDiff < 9) {
-            mDiffColor = mContext.getColor(R.color.green);
-        } else if (mDiff < 18) {
-            mDiffColor = mContext.getColor(R.color.yellow);
-        } else if (mDiff < 27) {
-            mDiffColor = mContext.getColor(R.color.orange);
-        } else {
-            mDiffColor = mContext.getColor(R.color.red);
-        }
-    }
-
-
-    public int getDifficultyColor() {
+    /*public int getDifficultyColor() {
         return mDiffColor;
     }
 
 
-    /**
+    /*
      * Get Route type as a String.
      * @return String value of Route type.
-     */
+     *
     private String getTypeString() {
         if (mIsBoulder) {
             return mContext.getString(R.string.boulder);
@@ -93,10 +79,10 @@ public class RouteInfo {
     }
 
 
-    /**
+    /*
      * Check that values given to the route are fine.
      * @return true if all is fine
-     */
+     *
     public boolean checkValuesAreAllRight() {
         if (!mIsBoulder && !mIsSport && !mIsTrad) {
             Toast.makeText(mContext, "Choose route type.", Toast.LENGTH_SHORT).show();
@@ -110,11 +96,11 @@ public class RouteInfo {
     }
 
 
-    /**
+    /*
      * Update all values in RouteInfo.
      * @param infoView baabaa
      * @return True if succeeded.
-     */
+     *
     public boolean updateAll(View infoView) {
         ArrayList<View> views = findAllViews(infoView);
 
@@ -136,10 +122,10 @@ public class RouteInfo {
     }
 
 
-    /**
+    /*
      * Setup listener for difficulty seekbar in info view.
      * @param infoView View of the info view.
-     */
+     *
     public void setupInfoView(View infoView) {
         SeekBar diffSeekBar = infoView.findViewById(R.id.diff_seekbar);
         TextView diffTextView = infoView.findViewById(R.id.diff_number);
@@ -162,10 +148,10 @@ public class RouteInfo {
     }
 
 
-    /**
+    /*
      * Update the info view with RouteInfo's values.
      * @param infoView the infoview.
-     */
+     *
     public void updateInfoView(View infoView) {
         ArrayList<View> views = findAllViews(infoView);
 
@@ -183,10 +169,10 @@ public class RouteInfo {
     }
 
 
-    /**
+    /*
      * Update the info card with RouteInfo's values.
      * @param infoCardView the info card.
-     */
+     *
     public void updateInfoCardView(View infoCardView) {
         if (infoCardView != null) {
             TextView nameTV = infoCardView.findViewById(R.id.name);
@@ -225,11 +211,11 @@ public class RouteInfo {
     }
 
 
-    /**
+    /*
      * Find all Views from the info view.
      * @param infoView the info view.
      * @return ListArray of the views.
-     */
+     *
     private ArrayList<View> findAllViews(View infoView) {
         ArrayList<View> views = new ArrayList<>();
 
@@ -249,5 +235,5 @@ public class RouteInfo {
             }
         }
         return views;
-    }
+    }*/
 }

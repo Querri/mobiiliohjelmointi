@@ -8,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.ar.core.HitResult;
 import com.google.ar.sceneform.ux.TransformationSystem;
@@ -61,7 +62,10 @@ public class Route {
     @Ignore
     private int mSelectedClipPosition = 0;
 
+
+    /** Default constructor **/
     public Route() {}
+
 
     @Ignore
     public Route(String placeID) {
@@ -106,6 +110,10 @@ public class Route {
 
         mClips.add(new Clip(mTransformationSystem, mRenderableHelper, hit,
                 RouteInfoHelper.getDiffColor(mContext, mDiff), previousClip));
+
+        Toast.makeText(mContext,
+                "clips total: " + Integer.toString(mClips.size()),
+                Toast.LENGTH_SHORT).show();
     }
 
 
@@ -140,13 +148,24 @@ public class Route {
     }
 
 
+    public void updateRouteInfoCard() {
+
+    }
+
+
     /**
      * Change every clip's color.
      */
-    public void changeRouteColor() {
+    public void changeRouteColor(Context context) {
         for (Clip clip : mClips) {
-            clip.changeColor(RouteInfoHelper.getDiffColor(mContext, mDiff));
+            clip.changeColor(RouteInfoHelper.getDiffColor(context, mDiff));
         }
+        Toast.makeText(context,
+                "color changed: "
+                        + RouteInfoHelper.getDiffString(mDiff)
+                        + ", clips: "
+                        + Integer.toString(mClips.size()),
+                Toast.LENGTH_SHORT).show();
     }
 
 
